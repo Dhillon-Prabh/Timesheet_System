@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+   <head><title>IGNORED</title></head>
+   <body>
+      <ui:composition template="/templates/masterLayout.xhtml">
+         <ui:define name="windowTitle">
+            #{msgs.pageTitle}
+         </ui:define>
+
+         <ui:define name="heading">
+            <ui:include src="/sections/header.xhtml"/>
+         </ui:define>
+         
+         <ui:define name="navPane">
+            <div id="navPane">
+               <ui:include src="/sections/navPane.xhtml"/>
+            </div>            
+         </ui:define>
+         
+         <ui:define name="content">
+            <h:form>
+               <div id="content">
+               <div>
+                  <p:panelGrid layout="grid" columns="2">
+                     <p:panel>
+                        <h:outputText value="#{msgs.eNumber}"/>
+                        <h:outputText value="#{user.empNumber}"/>
+                     </p:panel>
+                     <p:panel>
+                        <h:outputText value="#{msgs.weekNumber}"/>
+                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getWeekNumber()}"/>
+                     </p:panel>
+                     <p:panel>
+                        <h:outputText value="#{msgs.tsName}"/>
+                        <h:outputText value="#{employeeDatabase.currentEmployee.name}"/>
+                     </p:panel>
+                     <p:panel>
+                        <h:outputText value="#{msgs.weekEnding}"/>
+                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getWeekEnding()}"/>
+                     </p:panel>
+                  </p:panelGrid>
+               </div>
+               <p:dataTable value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).details}" var="row" scrollable="true" scrollHeight="400">
+                  <p:column width="60">
+                     <f:facet name="header">
+                        <h:outputText value="#{msgs.project}" 
+                                      style="font-weight: bold"/>
+                     </f:facet>
+                     <h:inputText value="#{row.projectID}" size="2"/>
+                     <f:facet name="footer">
+                        <h:commandButton action="#{timesheetDatabase.addTimesheet()}" value="Save"/>
+                     </f:facet>
+                  </p:column>
+                  <p:column width="80">
+                     <f:facet name="header">
+                        <h:outputText value="#{msgs.workPackage}"
+                                      style="font-weight: bold"/>
+                     </f:facet>
+                     <h:inputText value="#{row.workPackage}" size="4"/>
+                     <f:facet name="footer">
+                        <h:outputText value="#{msgs.total}"/>
+                     </f:facet>
+                  </p:column>
+                  <p:column width="40">
+                     <f:facet name="header">
+                        <h:outputText value="#{msgs.total}" 
+                                       style="font-weight: bold"/>
+                     </f:facet>
+                     <h:outputText value="#{row.getSum()}"/>
+                     <f:facet name="footer">
+                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getTotalHours()}"/>
+                     </f:facet>
+                  </p:column>
+                  <p:column width="60">
+                  	 <f:facet name="header">
+                        <h:outputText value="#{msgs.saturday}" 
+                                       style="font-weight: bold"/>
+                     </f:facet>
+                     <h:inputText value="#{row.hoursForWeek[0]}" size="2"/>
+                     <f:facet name="footer">
+                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getDailyHours()[0]}"/>
+                     </f:facet>
+                  </p:column>
+                  <p:column width="60">
+                  	 <f:facet name="header">
+                        <h:outputText value="#{msgs.sunday}" 
+                                       style="font-weight: bold"/>
+                     </f:facet>
+                     <h:inputText value="#{row.hoursForWeek[1]}" size="2"/>
+                     <f:facet name="footer">
+                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getDailyHours()[1]}"/>
+                     </f:facet>
+                  </p:column>
+                  <p:column width="60">
+                  	 <f:facet name="header">
+                        <h:outputText value="#{msgs.monday}" 
+                                       style="font-weight: bold"/>
+                     </f:facet>
+                     <h:inputText value="#{row.hoursForWeek[2]}" size="2"/>
+                     <f:facet name="footer">
+                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getDailyHours()[2]}"/>
+                     </f:facet>
+                  </p:column>
+                  <p:column width="60">
+                  	 <f:facet name="header">
+                        <h:outputText value="#{msgs.tuesday}" 
+                                       style="font-weight: bold"/>
+                     </f:facet>
+                     <h:inputText value="#{row.hoursForWeek[3]}" size="2"/>
+                     <f:facet name="footer">
+                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getDailyHours()[3]}"/>
+                     </f:facet>
+                  </p:column>
+                  <p:column width="60">
+                  	 <f:facet name="header">
+                        <h:outputText value="#{msgs.wednesday}" 
+                                       style="font-weight: bold"/>
+                     </f:facet>
+                     <h:inputText value="#{row.hoursForWeek[4]}" size="2"/>
+                     <f:facet name="footer">
+                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getDailyHours()[4]}"/>
+                     </f:facet>
+                  </p:column>
+                  <p:column width="60">
+                  	 <f:facet name="header">
+                        <h:outputText value="#{msgs.thursday}" 
+                                       style="font-weight: bold"/>
+                     </f:facet>
+                     <h:inputText value="#{row.hoursForWeek[5]}" size="2"/>
+                     <f:facet name="footer">
+                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getDailyHours()[5]}"/>
+                     </f:facet>
+                  </p:column>
+                  <p:column width="60">
+                  	 <f:facet name="header">
+                        <h:outputText value="#{msgs.friday}" 
+                                       style="font-weight: bold"/>
+                     </f:facet>
+                     <h:inputText value="#{row.hoursForWeek[6]}" size="2"/>
+                     <f:facet name="footer">
+                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getDailyHours()[6]}"/>
+                     </f:facet>
+                  </p:column>
+                  <p:column>
+                  	 <f:facet name="header">
+                        <h:outputText value="#{msgs.notes}" 
+                                       style="font-weight: bold"/>
+                     </f:facet>
+                     <h:inputText value="#{row.notes}" size="50"/>
+                     <f:facet name="footer">
+                        <h:commandButton value="Add Row" action="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).addRow()}"/>
+                     </f:facet>
+                  </p:column>
+               </p:dataTable>
+               </div>
+            </h:form>
+         </ui:define>
+      </ui:composition>
+   </body>
+</html>

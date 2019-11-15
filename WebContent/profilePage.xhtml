@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+   <head><title>IGNORED</title></head>
+   <body>
+      <ui:composition template="/templates/masterLayout.xhtml">
+         <ui:define name="windowTitle">
+            #{msgs.pageTitle}
+         </ui:define>
+
+         <ui:define name="heading">
+            <ui:include src="/sections/header.xhtml"/>
+         </ui:define>
+         
+         <ui:define name="navPane">
+            <div id="navPane">
+               <ui:include src="/sections/navPane.xhtml"/>
+            </div>            
+         </ui:define>
+         
+         <ui:define name="content">
+            <h:form>
+            <div id="content">
+               <h:panelGrid columns="2">
+                  <h:outputText value="#{msgs.profile}" class="subheader"/>
+                  <h:panelGroup/>
+                  <h:outputText value="#{msgs.userName}"/>
+                  <h:outputText value="#{employeeDatabase.currentEmployee.userName}"/>
+                  <h:outputText value="#{msgs.employeeNumber}"/>
+                  <h:outputText value="#{employeeDatabase.currentEmployee.empNumber}"/>
+                  <h:outputText value="#{msgs.name}"/>
+                  <h:outputText value="#{employeeDatabase.currentEmployee.name}"/>
+                  <h:outputText value="#{msgs.changePassword}" class="subheader"/>
+                  <h:panelGroup/>
+                  <h:outputText value="#{msgs.curPassword}"/>
+                  <h:inputSecret value="#{password.curPassword}"/> 
+                  <h:outputText value="#{msgs.newPassword}"/>
+                  <h:inputSecret value="#{password.newPassword}"/>
+                  <h:outputText value="#{msgs.confirmNewPassword}"/>
+                  <h:inputSecret value="#{password.confirmNewPassword}"/> 
+                  <h:commandButton value="Change Password" action="#{password.changePassword(employeeDatabase.currentEmployee)}" class="footerButton"/>
+                  <p:messages for="perror"/>
+               </h:panelGrid>
+               
+            </div>
+            </h:form>
+         </ui:define>
+      </ui:composition>
+   </body>
+</html>

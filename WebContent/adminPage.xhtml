@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+   <head><title>IGNORED</title></head>
+   <body>
+      <ui:composition template="/templates/masterLayout.xhtml">
+         <ui:define name="windowTitle">
+            #{msgs.pageTitle}
+         </ui:define>
+
+         <ui:define name="heading">
+            <ui:include src="/sections/header.xhtml"/>
+         </ui:define>
+         
+         <ui:define name="navPane">
+            <div id="navPane">
+               <ui:include src="/sections/navPane.xhtml"/>
+            </div>            
+         </ui:define>
+
+         <ui:define name="content">
+            <h:form>
+            <div id="content">
+               <h:outputText value="#{msgs.admin}" class="subheader"/>
+               <div class="adminButtons">
+                  <h:commandButton value="#{msgs.update}" action="#{adminModel.update}" class="button headerButton"/>
+                  <h:commandButton value="#{msgs.remove}" action="#{adminModel.remove}" class="button headerButton"/>
+                  <h:commandButton value="#{msgs.add}" action="#{adminModel.add}" class="button headerButton"/>
+               </div>
+               <div>
+                  <h:outputText value="#{msgs.update}" rendered="#{adminModel.updateEmp}" class="subheader"/>
+                  <h:outputText value="#{msgs.remove}" rendered="#{adminModel.removeEmp}" class="subheader"/>
+                  <h:outputText value="#{msgs.add}" rendered="#{adminModel.addEmp}" class="subheader"/>
+               </div>
+               <h:panelGrid columns="2">
+                  <h:outputText value="#{msgs.userName}" rendered="#{(adminModel.updateEmp and adminModel.foundEmp) or adminModel.addEmp}"/>
+                  <h:panelGroup rendered="#{(adminModel.updateEmp and adminModel.foundEmp) or adminModel.addEmp}">
+                     <h:outputText value="#{adminModel.userName}" rendered="#{adminModel.updateEmp and adminModel.foundEmp}"/>
+                     <h:inputText value="#{adminModel.userName}" rendered="#{adminModel.addEmp}"/>
+                  </h:panelGroup>
+                  <h:outputText value="#{msgs.name}"/>
+                  <h:inputText value="#{adminModel.name}"/>
+                  <h:outputText value="#{msgs.employeeNumber}" rendered="#{(adminModel.updateEmp and adminModel.foundEmp) or adminModel.addEmp}"/>
+                  <h:inputText value="#{adminModel.empNumber}" rendered="#{(adminModel.updateEmp and adminModel.foundEmp) or adminModel.addEmp}"/>
+                  <h:outputText value="#{msgs.newPassword}" rendered="#{adminModel.addEmp}"/>
+                  <h:inputSecret value="#{password.newPassword}" rendered="#{adminModel.addEmp}"/>
+                  <h:outputText value="#{msgs.confirmNewPassword}" rendered="#{adminModel.addEmp}"/>
+                  <h:inputSecret value="#{password.confirmNewPassword}" rendered="#{adminModel.addEmp}"/> 
+               </h:panelGrid>
+               
+               <div>
+               <h:commandButton value="#{msgs.findEmployee}" action="#{adminModel.findEmp(employeeDatabase.getEmployee(adminModel.name))}" rendered="#{adminModel.findEmp}" class="button footerButton"/>
+               <h:commandButton value="Add" action="#{employeeDatabase.addEmployee(adminModel.newEmployee())}" rendered="#{adminModel.addEmp}" class="button footerButton"/>
+               <h:commandButton value="#{msgs.removeEmployee}" action="#{employeeDatabase.deleteEmployee(employeeDatabase.getEmployee(adminModel.name))}" rendered="#{adminModel.removeEmp and adminModel.foundEmp}" class="button footerButton"/>
+               <h:commandButton value="#{msgs.updateEmployee}" action="#{adminModel.editEmployee()}" rendered="#{adminModel.updateEmp and adminModel.foundEmp}" class="button footerButton"/>
+               <h:commandButton value="#{msgs.resetPassword}" action="#{adminModel.resetPassword()}" rendered="#{adminModel.updateEmp and adminModel.foundEmp}" class="button footerButton"/>
+               <br/>
+               </div>
+            </div>
+            </h:form>
+         </ui:define>
+      </ui:composition>
+   </body>
+</html>

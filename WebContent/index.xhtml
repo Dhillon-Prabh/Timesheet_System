@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+   <head><title>IGNORED</title></head>
+   <body>
+      <ui:composition template="/templates/masterLayout.xhtml">
+         <ui:define name="windowTitle">
+            #{msgs.pageTitle}
+         </ui:define>
+
+         <ui:define name="heading">
+            <ui:include src="/sections/header.xhtml"/>
+         </ui:define>
+
+         <ui:define name="login">
+            <h:form>
+               <div id="login">
+                  <p:panelGrid columns="2" layout="grid" styleClass="loginBox">
+                     <h:outputText value="#{msgs.userName}"/>
+                     <h:inputText value="#{user.credentials.userName}"/>
+                     <h:outputText value="#{msgs.password}"/>
+                     <h:inputSecret value="#{user.credentials.password}"/>
+                     <h:panelGroup/>
+                     <h:commandButton value="Login" action="login" styleClass="loginButton"/>
+                  </p:panelGrid>
+               </div>
+            </h:form>
+         </ui:define>
+      </ui:composition>
+   </body>
+</html>

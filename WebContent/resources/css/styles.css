@@ -1,0 +1,115 @@
+#heading {
+   padding: 20px;
+   margin-bottom: 10px;
+   background: #ffffff;
+   border-bottom: 1px solid darkGray;
+}
+
+.center {
+	margin: auto 0;
+}
+
+.loginBox {
+	width: 40%;
+	margin: 0 auto;
+	border: 0;
+}
+
+.ui-widget-content {
+	background-color: transparent;
+    border: none;
+}
+
+.ui-panel .ui-panel-content {
+	padding: 0 !important;
+}
+
+.loginButton {
+   width: 75%;
+   background: #2b2457;
+   border: none;
+   color: #f2f7ff;
+   padding: 10px 15px;
+   text-align: center;
+   text-decoration: none;
+}
+
+#navPane {
+   border-right: thin solid lightGray;
+   padding: 5px;
+   width: 150px;
+   height: 600px;
+   background: #2b2457;
+}
+
+.subheader {
+	font-size: 1.5em;
+}
+
+.columnWidth {
+	width: 10px;
+}
+
+#login {
+   padding: 5px;
+   background: #f2f7ff;
+   text-align: center;
+   width: 100%;
+   height: 500px;
+}
+
+#content {
+   padding: 5px;
+   background: #f2f7ff;
+   position: absolute;
+   right: 8px;
+   left: 180px;
+   height: 600px;
+   top: 95px;
+}
+
+.adminButtons {
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+.header {
+   font-size: 2em;
+   font-family: Palatino;
+   text-align: center;
+}
+
+.headerButton {
+   background: #2b2457;
+   border: none;
+   color: #f2f7ff;
+   padding: 15px 15px;
+   text-align: center;
+   text-decoration: none;
+}
+
+.footerButton {
+   background: #2b2457;
+   border: none;
+   color: #f2f7ff;
+   padding: 7px 15px;
+   text-align: center;
+   text-decoration: none;
+}
+
+.navButton {
+   background: #f2f7ff;
+   border: none;
+   color: #2b2457;
+   padding: 15px 0px;
+   text-align: center;
+   text-decoration: none;
+}
+
+.button {
+   margin-left: 5px;
+   margin-top: 5px;
+   margin-bottom: 5px;
+   text-align: center;
+   width: 140px;
+}
