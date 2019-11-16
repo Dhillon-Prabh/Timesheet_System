@@ -2,22 +2,51 @@ package com.corejsf.model;
 
 
 import java.util.Date;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import ca.bcit.infosys.inventory.access.CategoryManager;
+import ca.bcit.infosys.timesheet.TimesheetRow;
 
 @Entity
 @Table(name="timesheet")
 public class Timesheet {
-    private static final long serialVersionUID = 1L;
+    /** Manager for category objects.*/
+    @Inject private TimesheetRowManager tsRowManager;
+    
+    /** Number of days in a week. */
+    public static final int DAYS_IN_WEEK = 7;
+    
+    /** Number of hours in a day as double. */
+    public static final double HOURS_IN_A_DAY = 24.0;
+    
+    /** Number of hours in a day. */
+    public static final BigDecimal HOURS_IN_DAY =
+           new BigDecimal(HOURS_IN_A_DAY).setScale(1, BigDecimal.ROUND_HALF_UP);
+    
+    /** Number of work hours in week as double. */
+    public static final double WORK_HOURS = 40.0;
+
+    /** Full work week in units of hours. */
+    public static final BigDecimal FULL_WORK_WEEK =
+            new BigDecimal(WORK_HOURS).setScale(1, BigDecimal.ROUND_HALF_UP);
+
+    /** Serial version number. */
+    private static final long serialVersionUID = 2L;
+    
+    /** The ArrayList of all details (i.e. rows) that the form contains. */
+    private List<TimesheetRow> details;
     
     @Id
     @Column(name="TimesheetID")
@@ -36,10 +65,6 @@ public class Timesheet {
     @Column(name="Flextime")
     private float flextime;
 
-    public Timesheet() {
-        
-    }
-    
     public Timesheet() {
         
     }
@@ -121,5 +146,36 @@ public class Timesheet {
         c.setTime(endWeek);
         c.setWeekDate(weekYear, weekNo, Calendar.FRIDAY);
         endWeek = c.getTime();
+    }
+    
+    /**
+     * Calculate the time sheet's end date as a string.
+     * @return the endWeek as string
+     */
+    public String getWeekEnding() {
+        Calendar c = new GregorianCalendar();
+        c.setTime(endWeek);
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        month += 1;
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        return month + "/" + day + "/" + year;
+    }
+    
+    /**
+     * Getter for timesheet row details.
+     * @return the details
+     */
+    public List<TimesheetRow> getDetails() {
+        return details;
+    }
+
+    /**
+     * Sets the details of the timesheet.
+     *
+     * @param newDetails new weekly charges to set
+     */
+    public void setDetails(final ArrayList<TimesheetRow> newDetails) {
+        details = newDetails;
     }
 }
