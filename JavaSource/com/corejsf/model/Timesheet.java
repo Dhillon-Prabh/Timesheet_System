@@ -44,9 +44,6 @@ public class Timesheet {
     /** Serial version number. */
     private static final long serialVersionUID = 2L;
     
-    /** The ArrayList of all details (i.e. rows) that the form contains. */
-    private List<TimesheetRow> details;
-    
     @Id
     @Column(name="TimesheetID")
     private int id;
@@ -59,10 +56,35 @@ public class Timesheet {
     private Date endWeek;
     
     @Column(name="Overtime")
-    private float overtime;
+    private BigDecimal overtime;
     
     @Column(name="Flextime")
-    private float flextime;
+    private BigDecimal flextime;
+    
+    /**
+     * Constructor for Timesheet.
+     * Initialize a Timesheet with no rows, no employee and
+     * to the current date.
+     */
+    public Timesheet() {}
+
+    /**
+     * Creates a Timesheet object with all fields set. 
+     * 
+     * @param user The owner of the timesheet
+     * @param end The date of the end of the week for the timesheet (Friday)
+     * @param charges The detailed hours charged for the week for this 
+     *        timesheet
+     */
+    public Timesheet(final Employee user, final Date end,
+            final List<TimesheetRow> charges) {
+        emp = user;
+        checkFriday(end);
+        endWeek = end;
+        for (TimesheetRow row : charges) {
+            tsRowManager.persist(row);
+        }
+    }
     
     public int getId() {
         return id;
@@ -84,19 +106,19 @@ public class Timesheet {
         this.endWeek = endWeek;
     }
 
-    public float getOvertime() {
+    public BigDecimal getOvertime() {
         return overtime;
     }
 
-    public void setOvertime(float overtime) {
+    public void setOvertime(BigDecimal overtime) {
         this.overtime = overtime;
     }
 
-    public float getFlextime() {
+    public BigDecimal getFlextime() {
         return flextime;
     }
 
-    public void setFlextime(float flextime) {
+    public void setFlextime(BigDecimal flextime) {
         this.flextime = flextime;
     }
     
@@ -158,7 +180,7 @@ public class Timesheet {
      * @return the details
      */
     public List<TimesheetRow> getDetails() {
-        return details;
+       return tsRowManager.getByTimesheet(this.id);
     }
 
     /**
@@ -167,6 +189,55 @@ public class Timesheet {
      * @param newDetails new weekly charges to set
      */
     public void setDetails(final ArrayList<TimesheetRow> newDetails) {
-        details = newDetails;
+        for(int i = 0; i < newDetails.size(); i++) {
+            tsRowManager.persist(newDetails.get(i));
+        }
     }
+    
+    /**
+     * Calculates the total hours.
+     *
+     * @return total hours for timesheet.
+     */
+    public BigDecimal getTotalHours() {
+        BigDecimal sum = BigDecimal.ZERO;
+        List<TimesheetRow> details = tsRowManager.getByTimesheet(this.id);
+        for (TimesheetRow row : details) {
+            sum = sum.add(BigDecimal.valueOf(row.getTotalHours()));
+        }
+        return sum;
+    }
+
+    /**
+     * Checks to see if timesheet total nets 40 hours.
+     * @return true if FULL_WORK_WEEK == hours -flextime - overtime
+     */
+    public boolean isValid() {
+        BigDecimal net = getTotalHours();
+        if (overtime != null) {
+            net = net.subtract(overtime);
+        }
+        if (flextime != null) {
+            net = net.subtract(flextime);
+        }
+        return net.equals(FULL_WORK_WEEK);
+    }
+
+    /**
+     * Deletes the specified row from the timesheet.
+     *
+     * @param rowToRemove
+     *            the row to remove from the timesheet.
+     */
+    public void deleteRow(final TimesheetRow rowToRemove) {
+        tsRowManager.remove(rowToRemove);
+    }
+
+    /**
+     * Add an empty row to to the timesheet.
+     */
+    public void addRow() {
+        tsRowManager.persist(new TimesheetRow(this));
+    }
+
 }

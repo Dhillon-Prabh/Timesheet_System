@@ -1,12 +1,21 @@
 package com.corejsf.model;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-public class TimesheetRow {
+
+@Entity
+@Table(name="timesheetRow")
+public class TimesheetRow implements Serializable{
+    private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name="RowID")
@@ -46,7 +55,10 @@ public class TimesheetRow {
     @Column(name="Note")
     private String note;
     
-
+    public TimesheetRow(Timesheet ts) {
+        this.timesheet = ts;
+    }
+    
     public int getId() {
         return id;
     }
