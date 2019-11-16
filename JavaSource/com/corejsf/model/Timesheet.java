@@ -16,8 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import ca.bcit.infosys.inventory.access.CategoryManager;
-import ca.bcit.infosys.timesheet.TimesheetRow;
+import com.corejsf.access.TimesheetRowManager;
 
 @Entity
 @Table(name="timesheet")
@@ -64,17 +63,9 @@ public class Timesheet {
     
     @Column(name="Flextime")
     private float flextime;
-
-    public Timesheet() {
-        
-    }
     
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Employee getEmp() {

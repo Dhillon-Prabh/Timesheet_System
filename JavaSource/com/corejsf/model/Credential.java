@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -27,6 +26,10 @@ public class Credential implements Serializable{
     private String password;
     
     public Credential() {};
+    
+    public int getId() {
+        return id;
+    }
     
     /**
      * get userName
