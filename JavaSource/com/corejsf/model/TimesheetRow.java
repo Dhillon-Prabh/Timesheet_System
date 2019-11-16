@@ -14,7 +14,7 @@ public class TimesheetRow {
     
     @ManyToOne
     @JoinColumn(name="TimesheetID")
-    private String timesheetID;
+    private Timesheet timesheet;
 
     @Column(name="ProjectID")
     private String projectID;
@@ -55,12 +55,12 @@ public class TimesheetRow {
         this.id = id;
     }
 
-    public String getTimesheetID() {
-        return timesheetID;
+    public Timesheet getTimesheetID() {
+        return timesheet;
     }
 
-    public void setTimesheetID(String timesheetID) {
-        this.timesheetID = timesheetID;
+    public void setTimesheetID(Timesheet timesheet) {
+        this.timesheet = timesheet;
     }
 
     public String getProjectID() {
