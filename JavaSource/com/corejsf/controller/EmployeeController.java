@@ -5,17 +5,13 @@ import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.corejsf.access.CredentialManager;
 import com.corejsf.access.EmployeeManager;
 import com.corejsf.model.Employee;
 
-import ca.bcit.infosys.employee.Credentials;
-import ca.bcit.infosys.employee.EmployeeList;
-
-@Named("EmpController")
+@Named("empController")
 @SessionScoped
 public class EmployeeController {
 
@@ -52,40 +48,24 @@ public class EmployeeController {
         return getEmployee("admin");
     }
 
-    public boolean verifyUser(Credentials credential) {
-        if (credential.getPassword().equals(credManager.findByUserName(credential.getUserName()))) {
-            currentEmployee = credManager.findByUserName(credential.getUserName()).getUserName();
-        }
-        
-        String username = credential.getUserName();
-        if (credential.getPassword().equals(db.getLoginCombo().get(username))) {
-            for (Employee emp : getEmployees()) {
-                if (emp.getUserName().equals(username)) {
-                    currentEmployee.copy(emp);
-                }
-            }
-            if (currentEmployee.getUserName().equals("admin")) {
-                currentEmployee.setIsAdmin(true);
-            }
-            db.getLoginEmployees().add(currentEmployee);
+    public boolean verifyUser(String username, String password) {
+        if (password.equals(credManager.findByUserName(username).getPassword())) {
+            currentEmployee = credManager.findByUserName(username).getEmp();
             return true;
         }
         return false;
     }
     
     public String logout(Employee employee) {
-        db.getLoginEmployees().remove(currentEmployee);
-        currentEmployee.clear();
+        currentEmployee = null;
         return "logOut";
     }
 
     public void deleteEmployee(Employee userToDelete) {
-        db.getLoginCombo().remove(userToDelete.getUserName());
-        getEmployees().remove(userToDelete);
+        empManager.remove(userToDelete);
     }
 
     public void addEmployee(Employee newEmployee) {
-        cp.setPassword(newEmployee);
-        getEmployees().add(newEmployee);
+        empManager.persist(newEmployee);
     }
 }

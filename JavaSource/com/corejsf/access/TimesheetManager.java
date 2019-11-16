@@ -81,4 +81,23 @@ public class TimesheetManager implements Serializable{
        t.setEmp(e);
        return t;
    }
+//   public Timesheet getCurrentTimesheet(Employee e) {
+//       Timesheet t = new Timesheet();
+//       int we = t.getWeekNumber();
+//       for (Timesheet ts : getTimesheets(e)) {
+//           if (ts.getWeekNumber() == we) {
+//               currentTimesheet = ts;
+//               return ts;
+//           }
+//       }
+//       t.setEmployee(em.getEmployee(e.getName()));
+//       t.addRow();
+//       t.addRow();
+//       t.addRow();
+//       t.addRow();
+//       t.addRow();
+//       currentTimesheet = t;
+//       addTimesheet();
+//       return t;
+//   }
 }

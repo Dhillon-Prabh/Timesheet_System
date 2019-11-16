@@ -22,9 +22,9 @@
                <div id="login">
                   <p:panelGrid columns="2" layout="grid" styleClass="loginBox">
                      <h:outputText value="#{msgs.userName}"/>
-                     <h:inputText value="#{user.credentials.userName}"/>
+                     <h:inputText binding="#{username}"/>
                      <h:outputText value="#{msgs.password}"/>
-                     <h:inputSecret value="#{user.credentials.password}"/>
+                     <h:inputSecret binding="#{password}"/>
                      <h:panelGroup/>
                      <h:commandButton value="Login" action="login" styleClass="loginButton"/>
                   </p:panelGrid>
