@@ -55,7 +55,6 @@ public class TimesheetManager implements Serializable{
     *            record to be removed from database
     */
    public void remove(Timesheet timesheet) {
-       //attach product
        timesheet = find(timesheet.getId());
        em.remove(timesheet);
    }
@@ -76,18 +75,10 @@ public class TimesheetManager implements Serializable{
        int we = t.getWeekNumber();
        for (Timesheet ts : getTimesheets(e)) {
            if (ts.getWeekNumber() == we) {
-               currentTimesheet = ts;
                return ts;
            }
        }
-       t.setEmployee(em.getEmployee(e.getName()));
-       t.addRow();
-       t.addRow();
-       t.addRow();
-       t.addRow();
-       t.addRow();
-       currentTimesheet = t;
-       addTimesheet();
+       t.setEmp(e);
        return t;
    }
 }

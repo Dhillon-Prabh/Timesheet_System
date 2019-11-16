@@ -50,7 +50,7 @@ public class CredentialManager implements Serializable {
         List<Credential> credList = query.getResultList();
         Map<String, String> credentials = new HashMap<String, String>();
         for (Credential cred : credList) {
-            credentials.put(cred.getUserName(), cred.getPassword());
+            credentials.put(cred.getEmp().getUserName(), cred.getPassword());
         }
         return credentials;
     }

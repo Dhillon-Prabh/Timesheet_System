@@ -66,7 +66,16 @@ public class Timesheet {
      * Initialize a Timesheet with no rows, no employee and
      * to the current date.
      */
-    public Timesheet() {}
+    public Timesheet() {
+        for (int i = 0; i < 5; i++) {
+            tsRowManager.persist(new TimesheetRow(this));
+        }
+        Calendar c = new GregorianCalendar();
+        int currentDay = c.get(Calendar.DAY_OF_WEEK);
+        int leftDays = Calendar.FRIDAY - currentDay;
+        c.add(Calendar.DATE, leftDays);
+        endWeek = c.getTime();
+    }
 
     /**
      * Creates a Timesheet object with all fields set. 
