@@ -1,6 +1,7 @@
 package com.corejsf.access;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -34,14 +35,14 @@ public class TimesheetRowManager implements Serializable {
         em.remove(tsr);
     }
     
-    public TimesheetRow[] getByTimesheet(int timesheetId) {
+    public ArrayList<TimesheetRow> getByTimesheet(int timesheetId) {
         TypedQuery<TimesheetRow> query = em.createQuery("select tsr from " +
                 "TimesheetRow tsr where tsr.timesheet.id = " + timesheetId, TimesheetRow.class); 
          List<TimesheetRow> tsrs = query.getResultList();
-         TimesheetRow[] tsrArray = new TimesheetRow[tsrs.size()];
-         for (int i=0; i < tsrArray.length; i++) {
-             tsrArray[i] = tsrs.get(i);
+         ArrayList<TimesheetRow> tsrList= new ArrayList<TimesheetRow>();
+         for (TimesheetRow tsr : tsrs) {
+             tsrList.add(tsr);
          }
-         return tsrArray;
+         return tsrList;
     }
 }

@@ -1,4 +1,4 @@
-package com.jsf.controller;
+package com.corejsf.controller;
 
 import java.util.List;
 import java.util.Map;

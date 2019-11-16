@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -21,7 +20,7 @@ public class Credential implements Serializable{
     
     @OneToOne
     @JoinColumn(name="UserName")
-    private String userName;
+    private Employee emp;
 
     @Column(name="PW")
     private String password;
@@ -36,15 +35,15 @@ public class Credential implements Serializable{
      * get userName
      * @return
      */
-    public String getUserName() {
-        return userName;
+    public Employee getEmp() {
+        return emp;
     }
     /**
      * userName setter.
      * @param id the loginID to set
      */
-    public void setUserName(final String id) {
-        userName = id;
+    public void setEmp(final Employee emp) {
+        this.emp = emp;
     }
     /**
      * password getter.
