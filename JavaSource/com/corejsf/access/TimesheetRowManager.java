@@ -1,0 +1,47 @@
+package com.corejsf.access;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.ejb.Stateless;
+import javax.enterprise.context.Dependent;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+
+import com.corejsf.model.TimesheetRow;
+
+@Dependent
+@Stateless
+public class TimesheetRowManager implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @PersistenceContext(unitName="timesheet-jpa") EntityManager em;
+    
+    public TimesheetRow find(int id) {
+        return em.find(TimesheetRow.class, id);
+            }
+
+    public void persist(TimesheetRow tsr) {
+        em.persist(tsr);
+    }
+    
+    public void merge(TimesheetRow tsr) {
+        em.merge(tsr);
+    }
+
+    public void remove(TimesheetRow tsr) {
+        tsr = find(tsr.getId());
+        em.remove(tsr);
+    }
+    
+    public TimesheetRow[] getByTimesheet(int timesheetId) {
+        TypedQuery<TimesheetRow> query = em.createQuery("select tsr from " +
+                "TimesheetRow tsr where tsr.timesheet.id = " + timesheetId, TimesheetRow.class); 
+         List<TimesheetRow> tsrs = query.getResultList();
+         TimesheetRow[] tsrArray = new TimesheetRow[tsrs.size()];
+         for (int i=0; i < tsrArray.length; i++) {
+             tsrArray[i] = tsrs.get(i);
+         }
+         return tsrArray;
+    }
+}

@@ -32,8 +32,6 @@ public class AdminModel implements Serializable {
     private String name;
     /** Temporary employee. */
     private Employee employee;
-    /** Whether user is finding employee. */
-    private boolean findEmp;
     /** Whether user is adding employee. */
     private boolean addEmp;
     /** Whether user is updating employee. */
@@ -51,7 +49,6 @@ public class AdminModel implements Serializable {
         foundEmp = false;
         addEmp = false;
         updateEmp = true;
-        findEmp = true;
         removeEmp = false;
     }
 
@@ -69,7 +66,6 @@ public class AdminModel implements Serializable {
         clear();
         foundEmp = false;
         updateEmp = false;
-        findEmp = false;
         addEmp = true;
         removeEmp = false;
     }
@@ -81,7 +77,6 @@ public class AdminModel implements Serializable {
         clear();
         foundEmp = false;
         updateEmp = true;
-        findEmp = true;
         addEmp = false;
         removeEmp = false;
     }
@@ -93,7 +88,6 @@ public class AdminModel implements Serializable {
         clear();
         foundEmp = false;
         updateEmp = false;
-        findEmp = true;
         addEmp = false;
         removeEmp = true;
     }
@@ -205,22 +199,6 @@ public class AdminModel implements Serializable {
      */
     public void setFoundEmp(boolean foundEmp) {
         this.foundEmp = foundEmp;
-    }
-
-    /**
-     * findEmp getter.
-     * @return the findEmp
-     */
-    public boolean isFindEmp() {
-        return findEmp;
-    }
-
-    /**
-     * findEmp setter.
-     * @param findEmp 
-     */
-    public void setFindEmp(boolean findEmp) {
-        this.findEmp = findEmp;
     }
 
     /**

@@ -11,7 +11,7 @@
     <supported-locale>ko</supported-locale>
   </locale-config>
   <resource-bundle>
-   <base-name>com.corejsf.messages</base-name>
+   <base-name>com.corejsf.timesheets.messages</base-name>
    <var>msgs</var>
   </resource-bundle>
  </application>

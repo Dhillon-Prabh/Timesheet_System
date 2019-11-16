@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+   <head><title>IGNORED</title></head>
+   <body>
+      <ui:composition>
+         <h:panelGrid columns="2">
+            <h:outputText value="#{msgs.userName}" rendered="#{adminModel.foundEmp}"/>
+            <h:outputText value="#{adminModel.userName}" rendered="#{adminModel.foundEmp}"/>
+            <h:outputText value="#{msgs.name}"/>
+            <h:inputText value="#{adminModel.name}"/>
+            <h:outputText value="#{msgs.employeeNumber}" rendered="#{adminModel.foundEmp}"/>
+            <h:inputText value="#{adminModel.empNumber}" rendered="#{adminModel.foundEmp}"/> 
+         </h:panelGrid>
+         <h:commandButton value="#{msgs.findEmployee}" action="#{adminModel.findEmp(employeeDatabase.getEmployee(adminModel.name))}" class="button footerButton"/>
+         <h:commandButton value="#{msgs.updateEmployee}" action="#{adminModel.editEmployee()}" rendered="#{adminModel.foundEmp}" class="button footerButton"/>
+         <h:commandButton value="#{msgs.resetPassword}" action="#{adminModel.resetPassword()}" rendered="#{adminModel.foundEmp}" class="button footerButton"/>
+      </ui:composition>
+   </body>
+</html>

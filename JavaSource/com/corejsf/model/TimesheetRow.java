@@ -23,25 +23,25 @@ public class TimesheetRow {
     private String wp;
 
     @Column(name="HourMon")
-    private String hourMon;
+    private double hourMon;
 
     @Column(name="HourTue")
-    private String hourTue;
+    private double hourTue;
 
     @Column(name="HourWed")
-    private String hourWed;
+    private double hourWed;
 
     @Column(name="HourThur")
-    private String hourThur;
+    private double hourThur;
 
     @Column(name="HourFri")
-    private String hourFri;
+    private double hourFri;
 
     @Column(name="HourSat")
-    private String hourSat;
+    private double hourSat;
 
     @Column(name="HourSun")
-    private String hourSun;
+    private double hourSun;
 
     @Column(name="Note")
     private String note;
@@ -50,11 +50,7 @@ public class TimesheetRow {
     public int getId() {
         return id;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    
     public String getTimesheetID() {
         return timesheetID;
     }
@@ -79,60 +75,64 @@ public class TimesheetRow {
         this.wp = wp;
     }
 
-    public String getHourMon() {
+    public double getHourMon() {
         return hourMon;
     }
 
-    public void setHourMon(String hourMon) {
+    public void setHourMon(double hourMon) {
         this.hourMon = hourMon;
     }
 
-    public String getHourTue() {
+    public double getHourTue() {
         return hourTue;
     }
 
-    public void setHourTue(String hourTue) {
+    public void setHourTue(double hourTue) {
         this.hourTue = hourTue;
     }
 
-    public String getHourWed() {
+    public double getHourWed() {
         return hourWed;
     }
 
-    public void setHourWed(String hourWed) {
+    public void setHourWed(double hourWed) {
         this.hourWed = hourWed;
     }
 
-    public String getHourThur() {
+    public double getHourThur() {
         return hourThur;
     }
 
-    public void setHourThur(String hourThur) {
+    public void setHourThur(double hourThur) {
         this.hourThur = hourThur;
     }
 
-    public String getHourFri() {
+    public double getHourFri() {
         return hourFri;
     }
 
-    public void setHourFri(String hourFri) {
+    public void setHourFri(double hourFri) {
         this.hourFri = hourFri;
     }
 
-    public String getHourSat() {
+    public double getHourSat() {
         return hourSat;
     }
 
-    public void setHourSat(String hourSat) {
+    public void setHourSat(double hourSat) {
         this.hourSat = hourSat;
     }
 
-    public String getHourSun() {
+    public double getHourSun() {
         return hourSun;
     }
 
-    public void setHourSun(String hourSun) {
+    public void setHourSun(double hourSun) {
         this.hourSun = hourSun;
+    }
+    
+    public double getTotalHours() {
+        return hourMon + hourTue + hourWed + hourThur + hourFri + hourSat + hourSun;
     }
 
     public String getNote() {

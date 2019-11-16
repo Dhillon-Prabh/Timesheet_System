@@ -28,6 +28,10 @@ public class Credential implements Serializable{
     
     public Credential() {};
     
+    public int getId() {
+        return id;
+    }
+    
     /**
      * get userName
      * @return
