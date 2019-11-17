@@ -15,7 +15,7 @@ import com.corejsf.model.Timesheet;
 @Stateless
 public class TimesheetManager implements Serializable{
     private static final long serialVersionUID = 1L;
-    @PersistenceContext(unitName="timesheets-jpa") EntityManager em;
+    @PersistenceContext(unitName="timesheet-jpa") EntityManager em;
 
     /**
     * Find Inventory record from database.
