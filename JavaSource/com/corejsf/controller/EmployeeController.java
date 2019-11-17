@@ -1,10 +1,14 @@
 package com.corejsf.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJB;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,7 +22,7 @@ import com.corejsf.model.Employee;
 import com.corejsf.model.Timesheet;
 
 @Named("empController")
-@SessionScoped
+@ConversationScoped
 public class EmployeeController implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -34,6 +38,8 @@ public class EmployeeController implements Serializable {
     @EJB
     private TimesheetManager tsManager;
     
+    @Inject 
+    private Conversation conversation;
     private Employee currentEmployee;
     private boolean admin;
     
@@ -62,6 +68,15 @@ public class EmployeeController implements Serializable {
         return admin;
     }
     
+    public List<Timesheet> getAllTimesheets() {
+        Timesheet[] tsArray = tsManager.getTimesheets(currentEmployee);
+        List<Timesheet> tsList = new ArrayList<Timesheet>();
+        for (Timesheet t : tsArray) {
+            tsList.add(t);
+        }
+        return tsList;
+    }
+    
     public Timesheet getCurrentTimesheet() {
         return tsManager.getCurrentTimesheet(currentEmployee);
     }
@@ -78,12 +93,14 @@ public class EmployeeController implements Serializable {
             if (cred.getUserName().equals("admin")) {
                 admin = true;
             }
+            conversation.begin();
             return true;
         }
         return false;
     }
     
     public String logout() {
+        conversation.end();
         currentEmployee = null;
         credController.setCurrentCred(new Credential());
         admin = false;

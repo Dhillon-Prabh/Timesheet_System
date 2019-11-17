@@ -5,7 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.corejsf.access.TimesheetManager;
@@ -28,7 +32,6 @@ public class TimesheetController implements Serializable {
     
     public void save(Timesheet ts) {
         System.out.println(ts);
-//        List<TimesheetRow> trList = details;
         System.out.println("These are the details2 " + details.get(0));
         for (int i = 0; i < details.size(); i++) {
             System.out.println("merging");
@@ -58,6 +61,9 @@ public class TimesheetController implements Serializable {
     
     public List<TimesheetRow> getDetails(Timesheet ts) {
         if (details == null) {
+            refreshList(ts);
+        } else if (details.get(0).getTimesheet().getId() != (ts.getId())) {
+            details = null;
             refreshList(ts);
         }
         return details;

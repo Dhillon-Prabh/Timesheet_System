@@ -3,6 +3,7 @@ package com.corejsf.controller;
 import java.io.Serializable;
 
 import javax.ejb.EJB;
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
