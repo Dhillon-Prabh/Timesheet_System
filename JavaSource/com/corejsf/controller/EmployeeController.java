@@ -63,6 +63,7 @@ public class EmployeeController implements Serializable {
     }
     
     public Timesheet getCurrentTimesheet() {
+//        System.out.println("Employee: " + currentEmployee.getUserName());
         return tsManager.getCurrentTimesheet(currentEmployee);
     }
     

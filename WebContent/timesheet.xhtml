@@ -154,7 +154,7 @@
                      </f:facet>
                      <h:inputText value="#{row.note}" size="50"/>
                      <f:facet name="footer">
-                        <h:commandButton value="Add Row" action="timesheet"/>
+                        <h:commandButton value="Add Row" action="#{tsController.addRow(empController.getCurrentTimesheet())}"/>
                      </f:facet>
                   </p:column>
                </p:dataTable>

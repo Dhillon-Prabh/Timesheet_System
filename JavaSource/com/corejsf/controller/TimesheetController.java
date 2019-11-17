@@ -36,6 +36,13 @@ public class TimesheetController implements Serializable {
         }
     }
     
+    public void addRow(Timesheet ts) {
+        System.out.println("in here");
+        TimesheetRow tr = new TimesheetRow(ts);
+        tsrm.persist(tr);
+        refreshList(ts);
+    }
+    
     public double getTimesheetHours(Timesheet ts) {
         double result = 0;
         result = tsrm.getTimesheetHours(ts);

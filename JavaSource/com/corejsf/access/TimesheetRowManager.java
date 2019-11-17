@@ -24,6 +24,7 @@ public class TimesheetRowManager implements Serializable {
             }
 
     public void persist(TimesheetRow tsr) {
+        System.out.println("Adding row to database");
         em.persist(tsr);
     }
     
