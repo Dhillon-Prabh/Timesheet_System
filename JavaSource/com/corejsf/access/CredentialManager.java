@@ -8,11 +8,11 @@ import java.util.Map;
 import javax.ejb.Stateless;
 import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import com.corejsf.model.Credential;
-import com.corejsf.model.Employee;
 
 @Dependent
 @Stateless
@@ -28,7 +28,12 @@ public class CredentialManager implements Serializable {
         TypedQuery<Credential> query = em.createQuery("select c from Credential c where c.userName=:name",
                 Credential.class);
         query.setParameter("name", name);
-        Credential cred = query.getSingleResult();
+        Credential cred = null;
+        try {
+            cred = query.getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
         return cred;
     }
     

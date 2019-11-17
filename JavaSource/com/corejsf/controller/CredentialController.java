@@ -8,14 +8,16 @@ import javax.inject.Named;
 
 import com.corejsf.access.CredentialManager;
 import com.corejsf.model.Credential;
+import com.corejsf.model.Employee;
 
 @Named("credController")
 @SessionScoped
 public class CredentialController implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Credential currentCred;
-    
+    private Credential currentCred = new Credential();
+    private String defaultPassword = "default";
+
     @EJB
     private CredentialManager credManager;
     
@@ -34,5 +36,11 @@ public class CredentialController implements Serializable {
             currentCred.setPassword(newPassword);
             credManager.merge(currentCred);
         }
+    }
+    
+    public void resetPassword(String username) {
+        Credential cred = credManager.findByUserName(username);
+        cred.setPassword(defaultPassword);
+        credManager.merge(cred);
     }
 }

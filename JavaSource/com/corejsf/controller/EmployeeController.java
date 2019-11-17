@@ -8,9 +8,11 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.NoResultException;
 
 import com.corejsf.access.CredentialManager;
 import com.corejsf.access.EmployeeManager;
+import com.corejsf.model.Credential;
 import com.corejsf.model.Employee;
 
 @Named("empController")
@@ -19,15 +21,16 @@ public class EmployeeController implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EJB
-    private EmployeeManager empManager;
+    protected EmployeeManager empManager;
     
     @EJB
-    private CredentialManager credManager;
+    protected CredentialManager credManager;
     
     @Inject
-    private CredentialController credController;
+    protected CredentialController credController;
     
     private Employee currentEmployee;
+    private boolean admin;
     
     /**
      * Default no-argument constructor.
@@ -49,15 +52,22 @@ public class EmployeeController implements Serializable {
     public Employee getCurrentEmployee() {
         return currentEmployee;
     }
-
-    public Employee getAdministrator() {
-        return getEmployee("admin");
+    
+    public boolean getAdmin() {
+        return admin;
     }
 
-    public boolean verifyUser(String username, String password) {
-        if (password.equals(credManager.findByUserName(username).getPassword())) {
-            currentEmployee = credManager.findByUserName(username).getEmp();
-            credController.setCurrentCred(credManager.findByUserName(username));
+    public boolean verifyUser(Credential cred) {
+        Credential credential = credManager.findByUserName(cred.getUserName());
+        if (credential == null) {
+            return false;
+        }
+        if (cred.getPassword().equals(credential.getPassword())) {
+            currentEmployee = credManager.findByUserName(cred.getUserName()).getEmp();
+            credController.setCurrentCred(credManager.findByUserName(cred.getUserName()));
+            if (cred.getUserName().equals("admin")) {
+                admin = true;
+            }
             return true;
         }
         return false;
@@ -65,15 +75,8 @@ public class EmployeeController implements Serializable {
     
     public String logout() {
         currentEmployee = null;
-        credController.setCurrentCred(null);
+        credController.setCurrentCred(new Credential());
+        admin = false;
         return "logOut";
-    }
-
-    public void deleteEmployee(Employee userToDelete) {
-        empManager.remove(userToDelete);
-    }
-
-    public void addEmployee(Employee newEmployee) {
-        empManager.persist(newEmployee);
     }
 }

@@ -9,7 +9,7 @@
          <h:form>
             <div>
                <h:commandButton value="#{msgs.profile}" action="profile" class="button navButton"/>
-               <h:commandButton value="#{msgs.admin}" action="adminPage" rendered="#{employeeDatabase.currentEmployee.isAdmin}" class="button navButton"/>
+               <h:commandButton value="#{msgs.admin}" action="adminPage" rendered="#{empController.admin}" class="button navButton"/>
                <h:commandButton value="#{msgs.currentTimesheet}" action="timesheet" class="button navButton"/>
                <h:commandButton value="#{msgs.previousTimesheet}" action="timesheetList" class="button navButton"/>
                <h:commandButton value="#{msgs.logout}" action="#{empController.logout}" class="button navButton"/>

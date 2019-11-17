@@ -8,17 +8,17 @@
       <ui:composition>
          <h:panelGrid columns="2">
             <h:outputText value="#{msgs.userName}"/>
-            <h:inputText value="#{adminModel.userName}"/>
+            <h:inputText value="#{adminController.userName}" required="true"/>
             <h:outputText value="#{msgs.name}"/>
-            <h:inputText value="#{adminModel.name}"/>
+            <h:inputText value="#{adminController.name}" required="true"/>
             <h:outputText value="#{msgs.employeeNumber}"/>
-            <h:inputText value="#{adminModel.empNumber}"/>
+            <h:inputText value="#{adminController.empNumber}" required="true"/>
             <h:outputText value="#{msgs.newPassword}"/>
-            <h:inputSecret value="#{password.newPassword}"/>
+            <h:inputSecret binding="#{password}" required="true"/>
             <h:outputText value="#{msgs.confirmNewPassword}"/>
-            <h:inputSecret value="#{password.confirmNewPassword}"/> 
+            <h:inputSecret binding="#{confirmPassword}" required="true"/> 
          </h:panelGrid>
-         <h:commandButton value="#{msgs.addEmployee}" action="#{employeeDatabase.addEmployee(adminModel.newEmployee())}" class="button footerButton"/>           
+         <h:commandButton value="#{msgs.addEmployee}" action="#{adminController.addEmployee(password.value, confirmPassword.value)}" class="button footerButton"/>           
       </ui:composition>
    </body>
 </html>

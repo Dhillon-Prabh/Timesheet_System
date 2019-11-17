@@ -43,8 +43,11 @@
                   <h:inputSecret binding="#{newPassword}"/>
                   <h:outputText value="#{msgs.confirmNewPassword}"/>
                   <h:inputSecret binding="#{confirmNewPassword}"/> 
-                  <h:commandButton value="Change Password" action="#{credController.updatePassword(curPassword.value, newPassword.value, confirmNewPassword.value)}" class="footerButton"/>
-                  <p:messages for="perror"/>
+                  <h:commandButton value="Change Password" 
+                                   action="#{credController.updatePassword(curPassword.value, 
+                                                                           newPassword.value, 
+                                                                           confirmNewPassword.value)}" 
+                                   class="footerButton"/>
                </h:panelGrid>
                
             </div>
