@@ -7,15 +7,15 @@
    <body>
       <ui:composition>
          <h:panelGrid columns="2">
-            <h:outputText value="#{msgs.userName}" rendered="#{adminModel.foundEmp}"/>
-            <h:outputText value="#{adminModel.userName}" rendered="#{adminModel.foundEmp}"/>
+            <h:outputText value="#{msgs.userName}" rendered="#{adminController.foundEmp}"/>
+            <h:outputText value="#{adminController.userName}" rendered="#{adminController.foundEmp}"/>
             <h:outputText value="#{msgs.name}"/>
-            <h:inputText value="#{adminModel.name}"/>
-            <h:outputText value="#{msgs.employeeNumber}" rendered="#{adminModel.foundEmp}"/>
-            <h:inputText value="#{adminModel.empNumber}" rendered="#{adminModel.foundEmp}"/>
+            <h:inputText value="#{adminController.name}" required="true"/>
+            <h:outputText value="#{msgs.employeeNumber}" rendered="#{adminController.foundEmp}"/>
+            <h:outputText value="#{adminController.empNumber}" rendered="#{adminController.foundEmp}"/>
          </h:panelGrid>
-         <h:commandButton value="#{msgs.findEmployee}" action="#{adminModel.findEmp(employeeDatabase.getEmployee(adminModel.name))}" class="button footerButton"/>
-         <h:commandButton value="#{msgs.removeEmployee}" action="#{employeeDatabase.deleteEmployee(employeeDatabase.getEmployee(adminModel.name))}" rendered="#{adminModel.foundEmp}" class="button footerButton"/>
+         <h:commandButton value="#{msgs.findEmployee}" action="#{adminController.findEmp(adminController.name)}" class="button footerButton"/>
+         <h:commandButton value="#{msgs.removeEmployee}" action="#{adminController.deleteEmployee()}" rendered="#{adminController.foundEmp}" class="button footerButton"/>
       </ui:composition>
    </body>
 </html>

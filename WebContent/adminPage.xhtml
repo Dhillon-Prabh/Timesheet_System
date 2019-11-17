@@ -27,23 +27,23 @@
             <div id="content">
                <h:outputText value="#{msgs.admin}" class="subheader"/>
                <div class="adminButtons">
-                  <h:commandButton value="#{msgs.update}" action="#{adminModel.update()}" class="button headerButton"/>
-                  <h:commandButton value="#{msgs.remove}" action="#{adminModel.remove()}" class="button headerButton"/>
-                  <h:commandButton value="#{msgs.add}" action="#{adminModel.add()}" class="button headerButton"/>
+                  <h:commandButton value="#{msgs.update}" action="#{adminController.update}" immediate="true" class="button headerButton"/>
+                  <h:commandButton value="#{msgs.remove}" action="#{adminController.remove}" immediate="true" class="button headerButton"/>
+                  <h:commandButton value="#{msgs.add}" action="#{adminController.add}" immediate="true" class="button headerButton"/>
                </div>
                <div>
-                  <h:outputText value="#{msgs.update}" rendered="#{adminModel.updateEmp}" class="subheader"/>
-                  <h:outputText value="#{msgs.remove}" rendered="#{adminModel.removeEmp}" class="subheader"/>
-                  <h:outputText value="#{msgs.add}" rendered="#{adminModel.addEmp}" class="subheader"/>
+                  <h:outputText value="#{msgs.update}" rendered="#{adminController.updateEmp}" class="subheader"/>
+                  <h:outputText value="#{msgs.remove}" rendered="#{adminController.removeEmp}" class="subheader"/>
+                  <h:outputText value="#{msgs.add}" rendered="#{adminController.addEmp}" class="subheader"/>
                </div>
                <h:panelGroup>
-               <h:panelGroup rendered="#{adminModel.addEmp}">
+               <h:panelGroup rendered="#{adminController.addEmp}">
                <ui:include src="/sections/adminAdd.xhtml"/>
                </h:panelGroup>
-               <h:panelGroup rendered="#{adminModel.removeEmp}">
+               <h:panelGroup rendered="#{adminController.removeEmp}">
                <ui:include src="/sections/adminRemove.xhtml"/>
                </h:panelGroup>
-               <h:panelGroup rendered="#{adminModel.updateEmp}">
+               <h:panelGroup rendered="#{adminController.updateEmp}">
                <ui:include src="/sections/adminUpdate.xhtml"/>
                </h:panelGroup>
                </h:panelGroup>
