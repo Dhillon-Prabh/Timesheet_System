@@ -24,7 +24,6 @@ public class TimesheetManager implements Serializable{
     
     @EJB
     private TimesheetRowManager tsrm;
-    
     /**
     * Find Inventory record from database.
     * 
@@ -103,8 +102,8 @@ public class TimesheetManager implements Serializable{
    /**
     * Add an empty row to to the timesheet.
     */
-   public void addRow() {
-       tsrm.persist(new TimesheetRow(this));
+   public void addRow(Timesheet ts) {
+       tsrm.persist(new TimesheetRow(ts));
    }
    
    /**
@@ -112,9 +111,9 @@ public class TimesheetManager implements Serializable{
     *
     * @return total hours for timesheet.
     */
-   public BigDecimal getTotalHours() {
+   public BigDecimal getTotalHours(Timesheet ts) {
        BigDecimal sum = BigDecimal.ZERO;
-       List<TimesheetRow> details = tsrm.getByTimesheet(this.id);
+       List<TimesheetRow> details = tsrm.getByTimesheet(ts.getId());
        for (TimesheetRow row : details) {
            sum = sum.add(BigDecimal.valueOf(row.getTotalHours()));
        }
@@ -125,8 +124,8 @@ public class TimesheetManager implements Serializable{
     * Getter for timesheet row details.
     * @return the details
     */
-   public List<TimesheetRow> getDetails() {
-      return tsrm.getByTimesheet(this.id);
+   public List<TimesheetRow> getDetails(Timesheet ts) {
+      return tsrm.getByTimesheet(ts.getId());
    }
 
    /**
@@ -138,20 +137,5 @@ public class TimesheetManager implements Serializable{
        for(int i = 0; i < newDetails.size(); i++) {
            tsrm.persist(newDetails.get(i));
        }
-   }
-
-   /**
-    * Checks to see if timesheet total nets 40 hours.
-    * @return true if FULL_WORK_WEEK == hours -flextime - overtime
-    */
-   public boolean isValid() {
-       BigDecimal net = getTotalHours();
-       if (overtime != null) {
-           net = net.subtract(overtime);
-       }
-       if (flextime != null) {
-           net = net.subtract(flextime);
-       }
-       return net.equals(FULL_WORK_WEEK);
    }
 }
