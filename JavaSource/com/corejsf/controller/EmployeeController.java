@@ -26,7 +26,7 @@ import com.corejsf.model.Employee;
 import com.corejsf.model.Timesheet;
 
 @Named("empController")
-@ConversationScoped
+@SessionScoped
 public class EmployeeController implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -117,14 +117,12 @@ public class EmployeeController implements Serializable {
             if (cred.getUserName().equals("admin")) {
                 admin = true;
             }
-            conversation.begin();
             return true;
         }
         return false;
     }
     
     public String logout() {
-        conversation.end();
         currentEmployee = null;
         credController.setCurrentCred(new Credential());
         admin = false;
