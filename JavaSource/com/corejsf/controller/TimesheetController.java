@@ -25,20 +25,14 @@ public class TimesheetController implements Serializable {
     private TimesheetManager tsm;
 
     private List<TimesheetRow> details;
-
-    /**
-     * Getter for timesheet row details.
-     * @return the details
-     */
-    public void fillDetails(Timesheet ts) {
-       details = tsrm.getByTimesheet(ts.getId());
-    }
     
     public void save(Timesheet ts) {
         System.out.println(ts);
-        List<TimesheetRow> trList = details;
-        for (TimesheetRow tr: trList) {
-            tsrm.merge(tr);
+//        List<TimesheetRow> trList = details;
+        System.out.println("These are the details2 " + details.get(0));
+        for (int i = 0; i < details.size(); i++) {
+            System.out.println("merging");
+            tsrm.merge(details.get(i));
         }
     }
     
@@ -56,12 +50,22 @@ public class TimesheetController implements Serializable {
    
     
     public List<TimesheetRow> getDetails(Timesheet ts) {
-        fillDetails(ts);
+        if (details == null) {
+            refreshList(ts);
+        }
         return details;
     }
 
     public void setDetails(List<TimesheetRow> details) {
         System.out.println("SetDetails()");
         this.details = details;
+    }
+    
+    private void refreshList(Timesheet ts) {
+        details = new ArrayList<TimesheetRow>();
+        List<TimesheetRow> listts = tsrm.getByTimesheet(ts.getId());
+        for (TimesheetRow tr : listts) {
+            details.add(tr);
+        }
     }
 }

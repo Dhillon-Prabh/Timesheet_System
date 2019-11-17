@@ -28,6 +28,7 @@ public class TimesheetRowManager implements Serializable {
     }
     
     public void merge(TimesheetRow tsr) {
+        System.out.println("tsrm merging:" + tsr.getWp());
         em.merge(tsr);
     }
 
