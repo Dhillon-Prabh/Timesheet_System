@@ -20,13 +20,15 @@
          <ui:define name="login">
             <h:form>
                <div id="login">
-                  <p:panelGrid columns="2" layout="grid" styleClass="loginBox">
+                  <p:panelGrid columns="3" layout="grid" styleClass="loginBox">
                      <h:outputText value="#{msgs.userName}"/>
-                     <h:inputText value="#{credController.currentCred.userName}"/>
+                     <h:inputText id="loginID" value="#{credController.currentCred.userName}" required="true" requiredMessage="#{msgs.loginRequired}"/>
+                     <h:message for="loginID" styleClass="errorMessage"/>
                      <h:outputText value="#{msgs.password}"/>
-                     <h:inputSecret value="#{credController.currentCred.password}"/>
+                     <h:inputSecret id="loginPassword" value="#{credController.currentCred.password}" required="true" requiredMessage="#{msgs.passwordRequired}" validator="#{empController.validateLogin}"/>
+                     <h:message for="loginPassword" styleClass="errorMessage"/>
                      <h:panelGroup/>
-                     <h:commandButton value="Login" action="login" styleClass="loginButton"/>
+                     <h:commandButton id="login" value="Login" action="login" styleClass="loginButton"/>
                   </p:panelGrid>
                </div>
             </h:form>

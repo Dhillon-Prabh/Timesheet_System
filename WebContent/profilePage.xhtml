@@ -26,23 +26,31 @@
          <ui:define name="content">
             <h:form>
             <div id="content">
-               <h:panelGrid columns="2">
+               <h:panelGrid columns="3">
                   <h:outputText value="#{msgs.profile}" class="subheader"/>
+                  <h:panelGroup/>
                   <h:panelGroup/>
                   <h:outputText value="#{msgs.userName}"/>
                   <h:outputText value="#{empController.currentEmployee.userName}"/>
+                  <h:panelGroup/>
                   <h:outputText value="#{msgs.employeeNumber}"/>
                   <h:outputText value="#{empController.currentEmployee.empNumber}"/>
+                  <h:panelGroup/>
                   <h:outputText value="#{msgs.name}"/>
                   <h:outputText value="#{empController.currentEmployee.name}"/>
+                  <h:panelGroup/>
                   <h:outputText value="#{msgs.changePassword}" class="subheader"/>
                   <h:panelGroup/>
+                  <h:panelGroup/>
                   <h:outputText value="#{msgs.curPassword}"/>
-                  <h:inputSecret binding="#{curPassword}"/> 
+                  <h:inputSecret id="curPassword" binding="#{curPassword}" validator="#{credController.validateCurPassword}" required="true"/>
+                  <h:message for="curPassword" styleClass="errorMessage"/> 
                   <h:outputText value="#{msgs.newPassword}"/>
-                  <h:inputSecret binding="#{newPassword}"/>
+                  <h:inputSecret id="newPassword" binding="#{newPassword}" required="true"/>
+                  <h:message for="newPassword"/>
                   <h:outputText value="#{msgs.confirmNewPassword}"/>
-                  <h:inputSecret binding="#{confirmNewPassword}"/> 
+                  <h:inputSecret id="confirmNewPassword" binding="#{confirmNewPassword}" validator="#{credController.validateNewPassword}" required="true"/>
+                  <h:message for="confirmNewPassword"/> 
                   <h:commandButton value="Change Password" 
                                    action="#{credController.updatePassword(curPassword.value, 
                                                                            newPassword.value, 

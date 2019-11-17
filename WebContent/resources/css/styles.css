@@ -5,12 +5,16 @@
    border-bottom: 1px solid darkGray;
 }
 
+.errorMessage {
+	color: red;
+}
+
 .center {
 	margin: auto 0;
 }
 
 .loginBox {
-	width: 40%;
+	width: 60%;
 	margin: 0 auto;
 	border: 0;
 }

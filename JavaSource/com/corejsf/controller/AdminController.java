@@ -1,13 +1,30 @@
 package com.corejsf.controller;
 
+import java.io.Serializable;
+
+import javax.ejb.EJB;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.corejsf.access.CredentialManager;
+import com.corejsf.access.EmployeeManager;
 import com.corejsf.model.Credential;
 import com.corejsf.model.Employee;
 
 @Named("adminController")
-public class AdminController extends EmployeeController {
+@ViewScoped
+public class AdminController implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    @EJB
+    private EmployeeManager empManager;
+    
+    @EJB
+    private CredentialManager credManager;
+    
+    @Inject
+    private EmployeeController empController;
     
     /** Employee username input. */
     private String userName;
@@ -56,7 +73,7 @@ public class AdminController extends EmployeeController {
         Credential cred = new Credential();
         cred.setUserName(userName);
         cred.setPassword(password);
-        cred.setEmp(getEmployee(name));
+        cred.setEmp(empController.getEmployee(name));
         credManager.persist(cred);
         clear();
     }
@@ -99,7 +116,7 @@ public class AdminController extends EmployeeController {
      * @param emp Employee to find
      */
     public void findEmp(String name) {
-        Employee emp = getEmployee(name);
+        Employee emp = empController.getEmployee(name);
         if (emp == null) {
             foundEmp = false;
         } else {

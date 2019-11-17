@@ -6,9 +6,13 @@ import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.NoResultException;
 
 import com.corejsf.access.CredentialManager;
 import com.corejsf.access.EmployeeManager;
@@ -23,13 +27,13 @@ public class EmployeeController implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EJB
-    protected EmployeeManager empManager;
+    private EmployeeManager empManager;
     
     @EJB
-    protected CredentialManager credManager;
+    private CredentialManager credManager;
     
     @Inject
-    protected CredentialController credController;
+    private CredentialController credController;
     
     @EJB
     private TimesheetManager tsManager;
@@ -67,8 +71,28 @@ public class EmployeeController implements Serializable {
         return tsManager.getCurrentTimesheet(currentEmployee);
     }
     
+    public void validateLogin(FacesContext context, UIComponent component, Object value) {
+
+        UIInput loginID = (UIInput) component.findComponent("loginID");
+        UIInput loginPassword = (UIInput) component.findComponent("loginPassword");
+     
+        String username = (String) loginID.getLocalValue();
+        String password = (String) loginPassword.getSubmittedValue();
+        Credential tempCred = new Credential();
+        tempCred.setUserName(username);
+        tempCred.setPassword(password);
+
+        if (!verifyUser(tempCred)) {
+            FacesMessage message = 
+                    new FacesMessage("Credential validation failed.", 
+                            "Incorrect username or password");
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            throw new ValidatorException(message);
+        }
+    }
     
     public boolean verifyUser(Credential cred) {
+
         Credential credential = credManager.findByUserName(cred.getUserName());
         if (credential == null) {
             return false;
