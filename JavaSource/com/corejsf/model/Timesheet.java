@@ -21,8 +21,6 @@ import com.corejsf.access.TimesheetRowManager;
 @Entity
 @Table(name="timesheet")
 public class Timesheet {
-    /** Manager for category objects.*/
-    @Inject private TimesheetRowManager tsRowManager;
     
     /** Number of days in a week. */
     public static final int DAYS_IN_WEEK = 7;
@@ -67,9 +65,6 @@ public class Timesheet {
      * to the current date.
      */
     public Timesheet() {
-        for (int i = 0; i < 5; i++) {
-            tsRowManager.persist(new TimesheetRow(this));
-        }
         Calendar c = new GregorianCalendar();
         int currentDay = c.get(Calendar.DAY_OF_WEEK);
         int leftDays = Calendar.FRIDAY - currentDay;
@@ -90,9 +85,6 @@ public class Timesheet {
         emp = user;
         checkFriday(end);
         endWeek = end;
-        for (TimesheetRow row : charges) {
-            tsRowManager.persist(row);
-        }
     }
     
     public int getId() {
@@ -182,71 +174,6 @@ public class Timesheet {
         month += 1;
         int day = c.get(Calendar.DAY_OF_MONTH);
         return month + "/" + day + "/" + year;
-    }
-    
-    /**
-     * Getter for timesheet row details.
-     * @return the details
-     */
-    public List<TimesheetRow> getDetails() {
-       return tsRowManager.getByTimesheet(this.id);
-    }
-
-    /**
-     * Sets the details of the timesheet.
-     *
-     * @param newDetails new weekly charges to set
-     */
-    public void setDetails(final ArrayList<TimesheetRow> newDetails) {
-        for(int i = 0; i < newDetails.size(); i++) {
-            tsRowManager.persist(newDetails.get(i));
-        }
-    }
-    
-    /**
-     * Calculates the total hours.
-     *
-     * @return total hours for timesheet.
-     */
-    public BigDecimal getTotalHours() {
-        BigDecimal sum = BigDecimal.ZERO;
-        List<TimesheetRow> details = tsRowManager.getByTimesheet(this.id);
-        for (TimesheetRow row : details) {
-            sum = sum.add(BigDecimal.valueOf(row.getTotalHours()));
-        }
-        return sum;
-    }
-
-    /**
-     * Checks to see if timesheet total nets 40 hours.
-     * @return true if FULL_WORK_WEEK == hours -flextime - overtime
-     */
-    public boolean isValid() {
-        BigDecimal net = getTotalHours();
-        if (overtime != null) {
-            net = net.subtract(overtime);
-        }
-        if (flextime != null) {
-            net = net.subtract(flextime);
-        }
-        return net.equals(FULL_WORK_WEEK);
-    }
-
-    /**
-     * Deletes the specified row from the timesheet.
-     *
-     * @param rowToRemove
-     *            the row to remove from the timesheet.
-     */
-    public void deleteRow(final TimesheetRow rowToRemove) {
-        tsRowManager.remove(rowToRemove);
-    }
-
-    /**
-     * Add an empty row to to the timesheet.
-     */
-    public void addRow() {
-        tsRowManager.persist(new TimesheetRow(this));
     }
 
 }

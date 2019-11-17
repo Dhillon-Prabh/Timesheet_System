@@ -19,7 +19,7 @@ public class Credential implements Serializable{
     private int id;
     
     @OneToOne
-    @JoinColumn(name="UserName")
+    @JoinColumn(name="EmployeeID")
     private Employee emp;
 
     @Column(name="PW")
