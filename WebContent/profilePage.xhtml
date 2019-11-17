@@ -30,20 +30,20 @@
                   <h:outputText value="#{msgs.profile}" class="subheader"/>
                   <h:panelGroup/>
                   <h:outputText value="#{msgs.userName}"/>
-                  <h:outputText value="#{employeeDatabase.currentEmployee.userName}"/>
+                  <h:outputText value="#{empController.currentEmployee.userName}"/>
                   <h:outputText value="#{msgs.employeeNumber}"/>
-                  <h:outputText value="#{employeeDatabase.currentEmployee.empNumber}"/>
+                  <h:outputText value="#{empController.currentEmployee.empNumber}"/>
                   <h:outputText value="#{msgs.name}"/>
-                  <h:outputText value="#{employeeDatabase.currentEmployee.name}"/>
+                  <h:outputText value="#{empController.currentEmployee.name}"/>
                   <h:outputText value="#{msgs.changePassword}" class="subheader"/>
                   <h:panelGroup/>
                   <h:outputText value="#{msgs.curPassword}"/>
-                  <h:inputSecret value="#{password.curPassword}"/> 
+                  <h:inputSecret binding="#{curPassword}"/> 
                   <h:outputText value="#{msgs.newPassword}"/>
-                  <h:inputSecret value="#{password.newPassword}"/>
+                  <h:inputSecret binding="#{newPassword}"/>
                   <h:outputText value="#{msgs.confirmNewPassword}"/>
-                  <h:inputSecret value="#{password.confirmNewPassword}"/> 
-                  <h:commandButton value="Change Password" action="#{password.changePassword(employeeDatabase.currentEmployee)}" class="footerButton"/>
+                  <h:inputSecret binding="#{confirmNewPassword}"/> 
+                  <h:commandButton value="Change Password" action="#{credController.updatePassword(curPassword.value, newPassword.value, confirmNewPassword.value)}" class="footerButton"/>
                   <p:messages for="perror"/>
                </h:panelGrid>
                

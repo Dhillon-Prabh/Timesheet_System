@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.corejsf.access.CredentialManager;
@@ -22,6 +23,9 @@ public class EmployeeController implements Serializable {
     
     @EJB
     private CredentialManager credManager;
+    
+    @Inject
+    private CredentialController credController;
     
     private Employee currentEmployee;
     
@@ -53,13 +57,15 @@ public class EmployeeController implements Serializable {
     public boolean verifyUser(String username, String password) {
         if (password.equals(credManager.findByUserName(username).getPassword())) {
             currentEmployee = credManager.findByUserName(username).getEmp();
+            credController.setCurrentCred(credManager.findByUserName(username));
             return true;
         }
         return false;
     }
     
-    public String logout(Employee employee) {
+    public String logout() {
         currentEmployee = null;
+        credController.setCurrentCred(null);
         return "logOut";
     }
 
