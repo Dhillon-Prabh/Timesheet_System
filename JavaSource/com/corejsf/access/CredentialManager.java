@@ -27,6 +27,7 @@ public class CredentialManager implements Serializable {
     public Credential findByUserName(String name) {
         TypedQuery<Credential> query = em.createQuery("select c from Credential c where c.userName=:name",
                 Credential.class);
+        query.setParameter("name", name);
         Credential cred = query.getSingleResult();
         return cred;
     }

@@ -22,6 +22,16 @@ public class Credential implements Serializable{
     @JoinColumn(name="EmployeeID")
     private Employee emp;
 
+    @Column(name="userName")
+    private String userName;
+    
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
     @Column(name="PW")
     private String password;
     
