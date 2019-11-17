@@ -86,6 +86,10 @@ public class TimesheetManager implements Serializable{
            }
        }
        t.setEmp(e);
+       persist(t);
+       for (int i = 0; i < 5; i++) {
+           addRow(t);
+       }
        return t;
    }
 
