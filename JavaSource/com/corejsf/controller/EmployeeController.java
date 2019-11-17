@@ -1,5 +1,6 @@
 package com.corejsf.controller;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,8 @@ import com.corejsf.model.Employee;
 
 @Named("empController")
 @SessionScoped
-public class EmployeeController {
+public class EmployeeController implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @EJB
     private EmployeeManager empManager;

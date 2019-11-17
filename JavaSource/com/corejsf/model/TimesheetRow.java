@@ -26,7 +26,7 @@ public class TimesheetRow implements Serializable{
     private Timesheet timesheet;
 
     @Column(name="ProjectID")
-    private String projectID;
+    private int projectID;
 
     @Column(name="WorkPackage")
     private String wp;
@@ -71,11 +71,11 @@ public class TimesheetRow implements Serializable{
         this.timesheet = timesheet;
     }
 
-    public String getProjectID() {
+    public int getProjectID() {
         return projectID;
     }
 
-    public void setProjectID(String projectID) {
+    public void setProjectID(int projectID) {
         this.projectID = projectID;
     }
 
