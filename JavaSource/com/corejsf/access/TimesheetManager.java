@@ -119,14 +119,6 @@ public class TimesheetManager implements Serializable{
        }
        return sum;
    }
-   
-   /**
-    * Getter for timesheet row details.
-    * @return the details
-    */
-   public List<TimesheetRow> getDetails(Timesheet ts) {
-      return tsrm.getByTimesheet(ts.getId());
-   }
 
    /**
     * Sets the details of the timesheet.

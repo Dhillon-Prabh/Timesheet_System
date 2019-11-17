@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import com.corejsf.model.Timesheet;
 import com.corejsf.model.TimesheetRow;
 
 @Dependent
@@ -44,5 +45,27 @@ public class TimesheetRowManager implements Serializable {
              tsrList.add(tsr);
          }
          return tsrList;
+    }
+
+    public double getTimesheetHours(Timesheet ts) {
+        double result = 0;
+        TypedQuery<TimesheetRow> query = em.createQuery("select tsr from " +
+                "TimesheetRow tsr where tsr.timesheet.id = " + ts.getId(), TimesheetRow.class); 
+         List<TimesheetRow> tsrs = query.getResultList();
+         for (TimesheetRow tsr : tsrs) {
+             result += tsr.getTotalHours();
+         }
+         return result;
+    }
+
+    public double getDayHours(Timesheet ts, int day) {
+        double result = 0;
+        TypedQuery<TimesheetRow> query = em.createQuery("select tsr from " +
+                "TimesheetRow tsr where tsr.timesheet.id = " + ts.getId(), TimesheetRow.class); 
+         List<TimesheetRow> tsrs = query.getResultList();
+         for (TimesheetRow tsr : tsrs) {
+             result += tsr.getDayhours(day);
+         }
+        return result;
     }
 }

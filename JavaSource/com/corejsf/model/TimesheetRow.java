@@ -55,6 +55,8 @@ public class TimesheetRow implements Serializable{
     @Column(name="Note")
     private String note;
     
+    public TimesheetRow() {}
+    
     public TimesheetRow(Timesheet ts) {
         this.timesheet = ts;
     }
@@ -146,13 +148,43 @@ public class TimesheetRow implements Serializable{
     public double getTotalHours() {
         return hourMon + hourTue + hourWed + hourThur + hourFri + hourSat + hourSun;
     }
-
+    
     public String getNote() {
         return note;
     }
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public double getDayhours(int day) {
+        double result;
+        switch (day) {
+            case 0:
+                result = hourSat;
+                break;
+            case 1:
+                result = hourSun;
+                break;
+            case 2:
+                result = hourMon;
+                break;
+            case 3:
+                result = hourTue;
+                break;
+            case 4:
+                result = hourWed;
+                break;
+            case 5:
+                result = hourThur;
+                break;
+            case 6:
+                result = hourFri;
+                break;
+            default:
+                result = 0;
+        }
+        return result;
     }
 
 }

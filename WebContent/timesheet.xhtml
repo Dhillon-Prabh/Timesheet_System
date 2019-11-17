@@ -30,23 +30,23 @@
                   <p:panelGrid layout="grid" columns="2">
                      <p:panel>
                         <h:outputText value="#{msgs.eNumber}"/>
-                        <h:outputText value="#{user.empNumber}"/>
+                        <h:outputText value="#{empController.currentEmployee.empNumber}"/>
                      </p:panel>
                      <p:panel>
                         <h:outputText value="#{msgs.weekNumber}"/>
-                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getWeekNumber()}"/>
+                        <h:outputText value="#{empController.getCurrentTimesheet().getWeekNumber()}"/>
                      </p:panel>
                      <p:panel>
                         <h:outputText value="#{msgs.tsName}"/>
-                        <h:outputText value="#{employeeDatabase.currentEmployee.name}"/>
+                        <h:outputText value="#{empController.currentEmployee.name}"/>
                      </p:panel>
                      <p:panel>
                         <h:outputText value="#{msgs.weekEnding}"/>
-                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getWeekEnding()}"/>
+                        <h:outputText value="#{empController.getCurrentTimesheet().getWeekEnding()}"/>
                      </p:panel>
                   </p:panelGrid>
                </div>
-               <p:dataTable value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).details}" var="row" scrollable="true" scrollHeight="400">
+               <p:dataTable value="#{tsController.getDetails(empController.getCurrentTimesheet())}" var="row" scrollable="true" scrollHeight="400">
                   <p:column width="60">
                      <f:facet name="header">
                         <h:outputText value="#{msgs.project}" 
@@ -54,7 +54,7 @@
                      </f:facet>
                      <h:inputText value="#{row.projectID}" size="2"/>
                      <f:facet name="footer">
-                        <h:commandButton action="#{timesheetDatabase.addTimesheet()}" value="Save"/>
+                        <h:commandButton action="#{tsController.save(empController.getCurrentTimesheet())}" value="Save"/>
                      </f:facet>
                   </p:column>
                   <p:column width="80">
@@ -62,7 +62,7 @@
                         <h:outputText value="#{msgs.workPackage}"
                                       style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText value="#{row.workPackage}" size="4"/>
+                     <h:inputText value="#{row.wp}" size="4"/>
                      <f:facet name="footer">
                         <h:outputText value="#{msgs.total}"/>
                      </f:facet>
@@ -72,9 +72,9 @@
                         <h:outputText value="#{msgs.total}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:outputText value="#{row.getSum()}"/>
+                     <h:outputText value="#{row.getTotalHours()}"/>
                      <f:facet name="footer">
-                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getTotalHours()}"/>
+                        <h:outputText value="#{tsController.getTimesheetHours(empController.getCurrentTimesheet())}"/>
                      </f:facet>
                   </p:column>
                   <p:column width="60">
@@ -82,9 +82,9 @@
                         <h:outputText value="#{msgs.saturday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText value="#{row.hoursForWeek[0]}" size="2"/>
+                     <h:inputText value="#{row.hourSat}" size="2"/>
                      <f:facet name="footer">
-                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getDailyHours()[0]}"/>
+                        <h:outputText value="#{tsController.getDayHour(empController.currentTimesheet, 0)}"/>
                      </f:facet>
                   </p:column>
                   <p:column width="60">
@@ -92,9 +92,9 @@
                         <h:outputText value="#{msgs.sunday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText value="#{row.hoursForWeek[1]}" size="2"/>
+                     <h:inputText value="#{row.hourSun}" size="2"/>
                      <f:facet name="footer">
-                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getDailyHours()[1]}"/>
+                        <h:outputText value="#{tsController.getDayHour(empController.currentTimesheet, 1)}"/>
                      </f:facet>
                   </p:column>
                   <p:column width="60">
@@ -102,9 +102,9 @@
                         <h:outputText value="#{msgs.monday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText value="#{row.hoursForWeek[2]}" size="2"/>
+                     <h:inputText value="#{row.hourMon}" size="2"/>
                      <f:facet name="footer">
-                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getDailyHours()[2]}"/>
+                        <h:outputText value="#{tsController.getDayHour(empController.currentTimesheet, 2)}"/>
                      </f:facet>
                   </p:column>
                   <p:column width="60">
@@ -112,9 +112,9 @@
                         <h:outputText value="#{msgs.tuesday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText value="#{row.hoursForWeek[3]}" size="2"/>
+                     <h:inputText value="#{row.hourTue}" size="2"/>
                      <f:facet name="footer">
-                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getDailyHours()[3]}"/>
+                        <h:outputText value="#{tsController.getDayHour(empController.currentTimesheet, 3)}"/>
                      </f:facet>
                   </p:column>
                   <p:column width="60">
@@ -122,9 +122,9 @@
                         <h:outputText value="#{msgs.wednesday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText value="#{row.hoursForWeek[4]}" size="2"/>
+                     <h:inputText value="#{row.hourWed}" size="2"/>
                      <f:facet name="footer">
-                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getDailyHours()[4]}"/>
+                        <h:outputText value="#{tsController.getDayHour(empController.currentTimesheet, 4)}"/>
                      </f:facet>
                   </p:column>
                   <p:column width="60">
@@ -132,9 +132,9 @@
                         <h:outputText value="#{msgs.thursday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText value="#{row.hoursForWeek[5]}" size="2"/>
+                     <h:inputText value="#{row.hourThur}" size="2"/>
                      <f:facet name="footer">
-                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getDailyHours()[5]}"/>
+                        <h:outputText value="#{tsController.getDayHour(empController.currentTimesheet, 5)}"/>
                      </f:facet>
                   </p:column>
                   <p:column width="60">
@@ -142,9 +142,9 @@
                         <h:outputText value="#{msgs.friday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText value="#{row.hoursForWeek[6]}" size="2"/>
+                     <h:inputText value="#{row.hourFri}" size="2"/>
                      <f:facet name="footer">
-                        <h:outputText value="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).getDailyHours()[6]}"/>
+                        <h:outputText value="#{tsController.getDayHour(empController.currentTimesheet, 6)}"/>
                      </f:facet>
                   </p:column>
                   <p:column>
@@ -152,9 +152,9 @@
                         <h:outputText value="#{msgs.notes}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText value="#{row.notes}" size="50"/>
+                     <h:inputText value="#{row.note}" size="50"/>
                      <f:facet name="footer">
-                        <h:commandButton value="Add Row" action="#{timesheetDatabase.getCurrentTimesheet(employeeDatabase.currentEmployee).addRow()}"/>
+                        <h:commandButton value="Add Row" action="timesheet"/>
                      </f:facet>
                   </p:column>
                </p:dataTable>
