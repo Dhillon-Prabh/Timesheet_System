@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,6 +20,7 @@ public class TimesheetRow implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="RowID")
     private int id;
     
@@ -65,11 +68,11 @@ public class TimesheetRow implements Serializable{
         return id;
     }
     
-    public Timesheet getTimesheetID() {
+    public Timesheet getTimesheet() {
         return timesheet;
     }
 
-    public void setTimesheetID(Timesheet timesheet) {
+    public void setTimesheet(Timesheet timesheet) {
         this.timesheet = timesheet;
     }
 

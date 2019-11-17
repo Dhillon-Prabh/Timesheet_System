@@ -11,6 +11,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -43,7 +45,8 @@ public class Timesheet {
     private static final long serialVersionUID = 2L;
     
     @Id
-    @Column(name="TimesheetID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="TimesheetID", updatable = false, nullable = false)
     private int id;
     
     @ManyToOne
@@ -80,8 +83,7 @@ public class Timesheet {
      * @param charges The detailed hours charged for the week for this 
      *        timesheet
      */
-    public Timesheet(final Employee user, final Date end,
-            final List<TimesheetRow> charges) {
+    public Timesheet(final Employee user, final Date end) {
         emp = user;
         checkFriday(end);
         endWeek = end;
