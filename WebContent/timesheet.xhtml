@@ -52,9 +52,9 @@
                         <h:outputText value="#{msgs.project}" 
                                       style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText id="projectID" value="#{row.projectID}" size="2" converterMessage="must be numeric"
+                     <h:inputText id="projectID" value="#{row.projectID}" size="2" converterMessage="#{msgs.hourNumber}"
                      	required="true" requiredMessage="#{msgs.requiredField}">
-                     	<f:convertNumber integerOnly="true" type="number"/>
+                     	<f:convertNumber integerOnly="true"/>
                      </h:inputText>
                      <h:message for="projectID" styleClass="errorMessage"/>
                      <f:facet name="footer">
@@ -87,7 +87,7 @@
                         <h:outputText value="#{msgs.saturday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText id="sat" value="#{row.hourSat}" size="2" converterMessage="must be a number" validatorMessage="must be between 0 and 24">
+                     <h:inputText id="sat" value="#{row.hourSat}" size="2" converterMessage="#{msgs.hourNumber}" validatorMessage="#{msgs.hourRestrict}">
                      	<f:convertNumber maxFractionDigits = "1" longOnly="true" type="number"/>
                      	<f:validateLongRange minimum = "0" maximum = "24" />
                      </h:inputText>
@@ -101,7 +101,7 @@
                         <h:outputText value="#{msgs.sunday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText id="sun" value="#{row.hourSun}" size="2" converterMessage="must be a number" validatorMessage="must be between 0 and 24">
+                     <h:inputText id="sun" value="#{row.hourSun}" size="2" converterMessage="#{msgs.hourNumber}" validatorMessage="#{msgs.hourRestrict}">
                      	<f:convertNumber maxFractionDigits = "1" longOnly="true" type="number"/>
                      	<f:validateLongRange minimum = "0" maximum = "24" />
                      </h:inputText>
@@ -115,7 +115,7 @@
                         <h:outputText value="#{msgs.monday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText id="mon" value="#{row.hourMon}" size="2" converterMessage="must be a number" validatorMessage="must be between 0 and 24">
+                     <h:inputText id="mon" value="#{row.hourMon}" size="2" converterMessage="#{msgs.hourNumber}" validatorMessage="#{msgs.hourRestrict}">
                      	<f:convertNumber maxFractionDigits = "1" longOnly="true" type="number"/>
                      	<f:validateLongRange minimum = "0" maximum = "24" />
                      </h:inputText>
@@ -129,7 +129,7 @@
                         <h:outputText value="#{msgs.tuesday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText for="tue" value="#{row.hourTue}" size="2" converterMessage="must be a number" validatorMessage="must be between 0 and 24">
+                     <h:inputText for="tue" value="#{row.hourTue}" size="2" converterMessage="#{msgs.hourNumber}" validatorMessage="#{msgs.hourRestrict}">
                      	<f:convertNumber maxFractionDigits = "1" longOnly="true" type="number"/>
                      	<f:validateLongRange minimum = "0" maximum = "24" />
                      </h:inputText>
@@ -143,7 +143,7 @@
                         <h:outputText value="#{msgs.wednesday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText for="wed" value="#{row.hourWed}" size="2" converterMessage="must be a number" validatorMessage="must be between 0 and 24">
+                     <h:inputText for="wed" value="#{row.hourWed}" size="2" converterMessage="#{msgs.hourNumber}" validatorMessage="#{msgs.hourRestrict}">
                      	<f:convertNumber maxFractionDigits = "1" longOnly="true" type="number"/>
                      	<f:validateLongRange minimum = "0" maximum = "24" />
                      </h:inputText>
@@ -157,7 +157,7 @@
                         <h:outputText value="#{msgs.thursday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText for="thur" value="#{row.hourThur}" size="2" converterMessage="must be a number" validatorMessage="must be between 0 and 24">
+                     <h:inputText for="thur" value="#{row.hourThur}" size="2" converterMessage="#{msgs.hourNumber}" validatorMessage="#{msgs.hourRestrict}">
                      	<f:convertNumber maxFractionDigits = "1" longOnly="true" type="number"/>
                      	<f:validateLongRange minimum = "0" maximum = "24" />
                      </h:inputText>
@@ -171,7 +171,7 @@
                         <h:outputText value="#{msgs.friday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText for="fri" value="#{row.hourFri}" size="2" converterMessage="must be a number" validatorMessage="must be between 0 and 24">
+                     <h:inputText for="fri" value="#{row.hourFri}" size="2" converterMessage="#{msgs.hourNumber}" validatorMessage="#{msgs.hourRestrict}">
                      	<f:convertNumber maxFractionDigits = "1" longOnly="true" type="number"/>
                      	<f:validateLongRange minimum = "0" maximum = "24" />
                      </h:inputText>
@@ -191,6 +191,7 @@
                      </f:facet>
                   </p:column>
                </p:dataTable>
+               <h:messages globalOnly="true" layout="table"/>
                </div>
             </h:form>
          </ui:define>

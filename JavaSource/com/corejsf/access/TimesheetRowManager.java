@@ -1,6 +1,7 @@
 package com.corejsf.access;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,24 +50,24 @@ public class TimesheetRowManager implements Serializable {
          return tsrList;
     }
 
-    public double getTimesheetHours(Timesheet ts) {
-        double result = 0;
+    public BigDecimal getTimesheetHours(Timesheet ts) {
+        BigDecimal result = BigDecimal.ZERO;
         TypedQuery<TimesheetRow> query = em.createQuery("select tsr from " +
                 "TimesheetRow tsr where tsr.timesheet.id = " + ts.getId(), TimesheetRow.class); 
          List<TimesheetRow> tsrs = query.getResultList();
          for (TimesheetRow tsr : tsrs) {
-             result += tsr.getTotalHours();
+             result.add(tsr.getTotalHours());
          }
          return result;
     }
 
-    public double getDayHours(Timesheet ts, int day) {
-        double result = 0;
+    public BigDecimal getDayHours(Timesheet ts, int day) {
+        BigDecimal result = BigDecimal.ZERO;
         TypedQuery<TimesheetRow> query = em.createQuery("select tsr from " +
                 "TimesheetRow tsr where tsr.timesheet.id = " + ts.getId(), TimesheetRow.class); 
          List<TimesheetRow> tsrs = query.getResultList();
          for (TimesheetRow tsr : tsrs) {
-             result += tsr.getDayhours(day);
+             result.add(tsr.getDayhours(day));
          }
         return result;
     }

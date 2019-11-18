@@ -119,7 +119,7 @@ public class TimesheetManager implements Serializable{
        BigDecimal sum = BigDecimal.ZERO;
        List<TimesheetRow> details = tsrm.getByTimesheet(ts.getId());
        for (TimesheetRow row : details) {
-           sum = sum.add(BigDecimal.valueOf(row.getTotalHours()));
+           sum = sum.add(row.getTotalHours());
        }
        return sum;
    }

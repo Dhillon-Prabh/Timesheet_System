@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -35,25 +34,25 @@ public class TimesheetRow implements Serializable{
     private String wp;
 
     @Column(name="HourMon")
-    private double hourMon;
+    private BigDecimal hourMon = BigDecimal.ZERO;
 
     @Column(name="HourTue")
-    private double hourTue;
+    private BigDecimal hourTue = BigDecimal.ZERO;
 
     @Column(name="HourWed")
-    private double hourWed;
+    private BigDecimal hourWed = BigDecimal.ZERO;
 
     @Column(name="HourThur")
-    private double hourThur;
+    private BigDecimal hourThur = BigDecimal.ZERO;
 
     @Column(name="HourFri")
-    private double hourFri;
+    private BigDecimal hourFri = BigDecimal.ZERO;
 
     @Column(name="HourSat")
-    private double hourSat;
+    private BigDecimal hourSat = BigDecimal.ZERO;
 
     @Column(name="HourSun")
-    private double hourSun;
+    private BigDecimal hourSun = BigDecimal.ZERO;
 
     @Column(name="Note")
     private String note;
@@ -62,6 +61,13 @@ public class TimesheetRow implements Serializable{
     
     public TimesheetRow(Timesheet ts) {
         this.timesheet = ts;
+        hourMon = BigDecimal.ZERO;
+        hourTue = BigDecimal.ZERO;
+        hourWed = BigDecimal.ZERO;
+        hourThur = BigDecimal.ZERO;
+        hourFri = BigDecimal.ZERO;
+        hourSat = BigDecimal.ZERO;
+        hourSun = BigDecimal.ZERO;
     }
     
     public int getId() {
@@ -92,64 +98,72 @@ public class TimesheetRow implements Serializable{
         this.wp = wp;
     }
 
-    public double getHourMon() {
+    public BigDecimal getHourMon() {
         return hourMon;
     }
 
-    public void setHourMon(double hourMon) {
+    public void setHourMon(BigDecimal hourMon) {
         this.hourMon = hourMon;
     }
 
-    public double getHourTue() {
+    public BigDecimal getHourTue() {
         return hourTue;
     }
 
-    public void setHourTue(double hourTue) {
+    public void setHourTue(BigDecimal hourTue) {
         this.hourTue = hourTue;
     }
 
-    public double getHourWed() {
+    public BigDecimal getHourWed() {
         return hourWed;
     }
 
-    public void setHourWed(double hourWed) {
+    public void setHourWed(BigDecimal hourWed) {
         this.hourWed = hourWed;
     }
 
-    public double getHourThur() {
+    public BigDecimal getHourThur() {
         return hourThur;
     }
 
-    public void setHourThur(double hourThur) {
+    public void setHourThur(BigDecimal hourThur) {
         this.hourThur = hourThur;
     }
 
-    public double getHourFri() {
+    public BigDecimal getHourFri() {
         return hourFri;
     }
 
-    public void setHourFri(double hourFri) {
+    public void setHourFri(BigDecimal hourFri) {
         this.hourFri = hourFri;
     }
 
-    public double getHourSat() {
+    public BigDecimal getHourSat() {
         return hourSat;
     }
 
-    public void setHourSat(double hourSat) {
+    public void setHourSat(BigDecimal hourSat) {
         this.hourSat = hourSat;
     }
 
-    public double getHourSun() {
+    public BigDecimal getHourSun() {
         return hourSun;
     }
 
-    public void setHourSun(double hourSun) {
+    public void setHourSun(BigDecimal hourSun) {
         this.hourSun = hourSun;
     }
     
-    public double getTotalHours() {
-        return hourMon + hourTue + hourWed + hourThur + hourFri + hourSat + hourSun;
+    public BigDecimal getTotalHours() {
+        BigDecimal sum = BigDecimal.ZERO;
+        sum.add(hourMon);
+        sum.add(hourTue);
+        sum.add(hourWed);
+        sum.add(hourThur);
+        sum.add(hourFri);
+        sum.add(hourSat);
+        sum.add(hourSun);
+        return sum;
     }
     
     public String getNote() {
@@ -160,8 +174,8 @@ public class TimesheetRow implements Serializable{
         this.note = note;
     }
 
-    public double getDayhours(int day) {
-        double result;
+    public BigDecimal getDayhours(int day) {
+        BigDecimal result;
         switch (day) {
             case 0:
                 result = hourSat;
@@ -185,7 +199,7 @@ public class TimesheetRow implements Serializable{
                 result = hourFri;
                 break;
             default:
-                result = 0;
+                result = BigDecimal.ZERO;
         }
         return result;
     }
