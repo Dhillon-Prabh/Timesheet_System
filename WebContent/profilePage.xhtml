@@ -43,21 +43,21 @@
                   <h:panelGroup/>
                   <h:panelGroup/>
                   <h:outputText value="#{msgs.curPassword}"/>
-                  <h:inputSecret id="curPassword" binding="#{curPassword}" validator="#{credController.validateCurPassword}" required="true"/>
+                  <h:inputSecret id="curPassword" binding="#{curPassword}" validator="#{credController.validateCurPassword}" required="true" requiredMessage="#{msgs.requiredField}"/>
                   <h:message for="curPassword" styleClass="errorMessage"/> 
                   <h:outputText value="#{msgs.newPassword}"/>
-                  <h:inputSecret id="newPassword" binding="#{newPassword}" required="true"/>
-                  <h:message for="newPassword"/>
+                  <h:inputSecret id="newPassword" binding="#{newPassword}" required="true" requiredMessage="#{msgs.requiredField}"/>
+                  <h:message for="newPassword" styleClass="errorMessage"/>
                   <h:outputText value="#{msgs.confirmNewPassword}"/>
-                  <h:inputSecret id="confirmNewPassword" binding="#{confirmNewPassword}" validator="#{credController.validateNewPassword}" required="true"/>
-                  <h:message for="confirmNewPassword"/> 
+                  <h:inputSecret id="confirmNewPassword" binding="#{confirmNewPassword}" validator="#{credController.validateNewPassword}" required="true" requiredMessage="#{msgs.requiredField}"/>
+                  <h:message for="confirmNewPassword" styleClass="errorMessage"/> 
                   <h:commandButton value="Change Password" 
                                    action="#{credController.updatePassword(curPassword.value, 
                                                                            newPassword.value, 
                                                                            confirmNewPassword.value)}" 
                                    class="footerButton"/>
                </h:panelGrid>
-               
+               <h:messages globalOnly="true" layout="table"/>
             </div>
             </h:form>
          </ui:define>

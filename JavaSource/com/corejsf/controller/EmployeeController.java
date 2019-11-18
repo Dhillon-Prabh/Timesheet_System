@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -80,6 +77,15 @@ public class EmployeeController implements Serializable {
         return tsList;
     }
     
+    public List<Timesheet> getAllTimesheets(Employee emp) {
+        Timesheet[] tsArray = tsManager.getTimesheets(emp);
+        List<Timesheet> tsList = new ArrayList<Timesheet>();
+        for (Timesheet t : tsArray) {
+            tsList.add(t);
+        }
+        return tsList;
+    }
+    
     public Timesheet getCurrentTimesheet() {
         return tsManager.getCurrentTimesheet(currentEmployee);
     }
@@ -96,9 +102,8 @@ public class EmployeeController implements Serializable {
         tempCred.setPassword(password);
 
         if (!verifyUser(tempCred)) {
-            FacesMessage message = 
-                    new FacesMessage("Credential validation failed.", 
-                            "Incorrect username or password");
+            FacesMessage message = com.corejsf.util.Messages.getMessage(
+                    "com.corejsf.controller.messages", "loginFail", null);
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(message);
         }

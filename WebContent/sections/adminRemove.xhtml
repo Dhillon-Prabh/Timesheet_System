@@ -6,16 +6,19 @@
    <head><title>IGNORED</title></head>
    <body>
       <ui:composition>
-         <h:panelGrid columns="2">
+         <h:panelGrid columns="3">
             <h:outputText value="#{msgs.userName}" rendered="#{adminController.foundEmp}"/>
             <h:outputText value="#{adminController.userName}" rendered="#{adminController.foundEmp}"/>
+            <h:panelGrid rendered="#{adminController.foundEmp}"/>
             <h:outputText value="#{msgs.name}"/>
-            <h:inputText value="#{adminController.name}" required="true"/>
+            <h:inputText id="deleteName" value="#{adminController.name}" required="true" requiredMessage="#{msgs.requiredField}" validator="#{adminController.validateDeleteAdmin}"/>
+            <h:message for="deleteName" styleClass="errorMessage"/>
             <h:outputText value="#{msgs.employeeNumber}" rendered="#{adminController.foundEmp}"/>
             <h:outputText value="#{adminController.empNumber}" rendered="#{adminController.foundEmp}"/>
          </h:panelGrid>
          <h:commandButton value="#{msgs.findEmployee}" action="#{adminController.findEmp(adminController.name)}" class="button footerButton"/>
          <h:commandButton value="#{msgs.removeEmployee}" action="#{adminController.deleteEmployee()}" rendered="#{adminController.foundEmp}" class="button footerButton"/>
+         <h:messages globalOnly="true" layout="table"/>
       </ui:composition>
    </body>
 </html>
