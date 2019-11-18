@@ -56,12 +56,6 @@ public class Timesheet {
     @Column(name="EndWeek")
     private Date endWeek;
     
-    @Column(name="Overtime")
-    private BigDecimal overtime;
-    
-    @Column(name="Flextime")
-    private BigDecimal flextime;
-    
     /**
      * Constructor for Timesheet.
      * Initialize a Timesheet with no rows, no employee and
@@ -107,22 +101,6 @@ public class Timesheet {
 
     public void setEndWeek(Date endWeek) {
         this.endWeek = endWeek;
-    }
-
-    public BigDecimal getOvertime() {
-        return overtime;
-    }
-
-    public void setOvertime(BigDecimal overtime) {
-        this.overtime = overtime;
-    }
-
-    public BigDecimal getFlextime() {
-        return flextime;
-    }
-
-    public void setFlextime(BigDecimal flextime) {
-        this.flextime = flextime;
     }
     
     /**
