@@ -40,6 +40,8 @@ public class CredentialController implements Serializable {
         if (currentCred.getPassword().equals(curPassword) && newPassword.equals(confirmNewPassword)) {
             currentCred.setPassword(newPassword);
             credManager.merge(currentCred);
+            FacesMessage facesMessage = new FacesMessage("Successfully updated password", "Password updated");
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
         }
     }
     

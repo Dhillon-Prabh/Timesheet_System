@@ -81,6 +81,15 @@ public class EmployeeController implements Serializable {
         return tsList;
     }
     
+    public List<Timesheet> getAllTimesheets(Employee emp) {
+        Timesheet[] tsArray = tsManager.getTimesheets(emp);
+        List<Timesheet> tsList = new ArrayList<Timesheet>();
+        for (Timesheet t : tsArray) {
+            tsList.add(t);
+        }
+        return tsList;
+    }
+    
     public Timesheet getCurrentTimesheet() {
         return tsManager.getCurrentTimesheet(currentEmployee);
     }

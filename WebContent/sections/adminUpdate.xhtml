@@ -6,17 +6,21 @@
    <head><title>IGNORED</title></head>
    <body>
       <ui:composition>
-         <h:panelGrid columns="2">
+         <h:panelGrid columns="3">
             <h:outputText value="#{msgs.userName}" rendered="#{adminController.foundEmp}"/>
             <h:outputText value="#{adminController.userName}" rendered="#{adminController.foundEmp}"/>
+            <h:panelGroup rendered="#{adminController.foundEmp}"/>
             <h:outputText value="#{msgs.name}"/>
-            <h:inputText value="#{adminController.name}" required="true"/>
-            <h:outputText value="#{msgs.employeeNumber}" rendered="#{adminController.foundEmp}"/>
-            <h:inputText value="#{adminController.empNumber}" rendered="#{adminController.foundEmp}"/> 
+            <h:inputText id="updateName" value="#{adminController.name}" required="true" requiredMessage="#{msgs.requiredField}" validator="#{adminController.validateUpdateAdmin}"/>
+            <h:message for="updateName" styleClass="errorMessage"/>
+            <h:outputText id="updateEmpNum" value="#{msgs.employeeNumber}" rendered="#{adminController.foundEmp}"/>
+            <h:inputText value="#{adminController.empNumber}" required="true" requiredMessage="#{msgs.requiredField}" rendered="#{adminController.foundEmp}"/>
+            <h:message for="updateEmpNum" styleClass="errorMessage"/> 
          </h:panelGrid>
          <h:commandButton value="#{msgs.findEmployee}" action="#{adminController.findEmp(adminController.name)}" class="button footerButton"/>
          <h:commandButton value="#{msgs.updateEmployee}" action="#{adminController.editEmployee()}" rendered="#{adminController.foundEmp}" class="button footerButton"/>
          <h:commandButton value="#{msgs.resetPassword}" action="#{credController.resetPassword(adminController.userName)}" rendered="#{adminController.foundEmp}" class="button footerButton"/>
+         <h:messages globalOnly="true" layout="table"/>
       </ui:composition>
    </body>
 </html>

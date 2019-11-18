@@ -1,16 +1,26 @@
 package com.corejsf.controller;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.corejsf.access.CredentialManager;
 import com.corejsf.access.EmployeeManager;
+import com.corejsf.access.TimesheetManager;
+import com.corejsf.access.TimesheetRowManager;
 import com.corejsf.model.Credential;
 import com.corejsf.model.Employee;
+import com.corejsf.model.Timesheet;
+import com.corejsf.model.TimesheetRow;
 
 @Named("adminController")
 @ViewScoped
@@ -23,8 +33,17 @@ public class AdminController implements Serializable {
     @EJB
     private CredentialManager credManager;
     
+    @EJB
+    private TimesheetManager tsManager;
+    
+    @EJB
+    private TimesheetRowManager tsrManager;
+    
     @Inject
     private EmployeeController empController;
+    
+    @Inject
+    private TimesheetController tsController;
     
     /** Employee username input. */
     private String userName;
@@ -54,13 +73,107 @@ public class AdminController implements Serializable {
         removeEmp = false;
     }
     
+    public void validateUpdateAdmin(FacesContext context, UIComponent component, Object value) {
+
+        UIInput nameInput = (UIInput) component.findComponent("updateName");
+        
+        String name = (String) nameInput.getSubmittedValue();
+
+        System.out.println(name);
+        if (name.equals("admin")) {
+            FacesMessage message = 
+                    new FacesMessage("Attempting to update admin.", 
+                            "Cannot alter admin account");
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            throw new ValidatorException(message);
+        }
+    }
+    
+    public void validateDeleteAdmin(FacesContext context, UIComponent component, Object value) {
+
+        UIInput nameInput = (UIInput) component.findComponent("deleteName");
+        
+        String name = (String) nameInput.getSubmittedValue();
+
+        System.out.println(name);
+        if (name.equals("admin")) {
+            FacesMessage message = 
+                    new FacesMessage("Attempting to delete admin.", 
+                            "Cannot delete admin");
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            throw new ValidatorException(message);
+        }
+    }
+    
     public void deleteEmployee() {
         Credential cred = credManager.findByUserName(userName);
         credManager.remove(cred);
+        
+        List<Timesheet> timesheets = empController.getAllTimesheets(employee);
+        for (Timesheet ts : timesheets) {
+            List<TimesheetRow> rows = tsController.getDetails(ts);
+            for (TimesheetRow row : rows) {
+                tsrManager.remove(row);
+            }
+            tsManager.remove(ts);
+        }
+        
         empManager.remove(employee);
-        clear();
+        remove();
+
+        FacesMessage facesMessage = new FacesMessage("Successfully deleted employee", "Employee deleted");
+        FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+    }
+    
+    public void validateEmpNum(FacesContext context, UIComponent component, Object value) {
+        
+        Integer empNumber = ((Integer) value).intValue();
+
+        for (Employee e : empController.getEmployees()) {
+            if (e.getEmpNumber() == empNumber) {
+                FacesMessage message = 
+                        new FacesMessage("Existing employee number.", 
+                                "Employee with employee number " + value + " already exists in the system");
+                message.setSeverity(FacesMessage.SEVERITY_ERROR);
+                throw new ValidatorException(message);
+            }
+        }
+    }
+    
+    public void validateUserName(FacesContext context, UIComponent component, Object value) {
+
+        UIInput usernameInput = (UIInput) component.findComponent("addUserName");
+        
+        String username = (String) usernameInput.getSubmittedValue();
+
+        for (Employee e : empController.getEmployees()) {
+            if (e.getUserName().equals(username)) {
+                FacesMessage message = 
+                        new FacesMessage("Existing username.", 
+                                "Username already exists in the system");
+                message.setSeverity(FacesMessage.SEVERITY_ERROR);
+                throw new ValidatorException(message);
+            }
+        }
     }
 
+    public void validateNewPassword(FacesContext context, UIComponent component, Object value) {
+
+        UIInput newPassword = (UIInput) component.findComponent("addNewPassword");
+        UIInput confirmNewPassword = (UIInput) component.findComponent("addConfirmPassword");
+        
+        String password = (String) newPassword.getLocalValue();
+        String password2 = (String) confirmNewPassword.getSubmittedValue();
+
+        if (!password.equals(password2)) {
+            FacesMessage message = 
+                    new FacesMessage("Password match failed.", 
+                            "New passwords do not match");
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            throw new ValidatorException(message);
+        }
+    }
+    
     public void addEmployee(String password, String newPassword) {
         if (!password.equals(newPassword)) {
             return;
@@ -75,7 +188,7 @@ public class AdminController implements Serializable {
         cred.setPassword(password);
         cred.setEmp(empController.getEmployee(name));
         credManager.persist(cred);
-        clear();
+        add();
     }
     
     /**
@@ -119,6 +232,8 @@ public class AdminController implements Serializable {
         Employee emp = empController.getEmployee(name);
         if (emp == null) {
             foundEmp = false;
+            FacesMessage facesMessage = new FacesMessage("Could not find employee with name : " + name, "Employee not found");
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
         } else {
             employee = emp;
             foundEmp = true;
@@ -139,6 +254,10 @@ public class AdminController implements Serializable {
             employee.setEmpNumber(empNumber);
         }
         empManager.merge(employee);
+        update();
+
+        FacesMessage facesMessage = new FacesMessage("Successfully updated employee", "Employee updated");
+        FacesContext.getCurrentInstance().addMessage(null, facesMessage);
     }
     
     /**

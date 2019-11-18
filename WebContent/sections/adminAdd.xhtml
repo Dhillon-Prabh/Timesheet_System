@@ -6,19 +6,25 @@
    <head><title>IGNORED</title></head>
    <body>
       <ui:composition>
-         <h:panelGrid columns="2">
+         <h:panelGrid columns="3">
             <h:outputText value="#{msgs.userName}"/>
-            <h:inputText value="#{adminController.userName}" required="true"/>
+            <h:inputText id="addUserName" value="#{adminController.userName}" validator="#{adminController.validateUserName}" required="true" requiredMessage="#{msgs.requiredField}"/>
+            <h:message for="addUserName" styleClass="errorMessage"/>
             <h:outputText value="#{msgs.name}"/>
-            <h:inputText value="#{adminController.name}" required="true"/>
+            <h:inputText id="addName" value="#{adminController.name}" required="true" requiredMessage="#{msgs.requiredField}"/>
+            <h:message for="addName" styleClass="errorMessage"/>
             <h:outputText value="#{msgs.employeeNumber}"/>
-            <h:inputText value="#{adminController.empNumber}" required="true"/>
+            <h:inputText id="addEmpNum" value="#{adminController.empNumber}" validator="#{adminController.validateEmpNum}" required="true" requiredMessage="#{msgs.requiredField}"/>
+            <h:message for="addEmpNum" styleClass="errorMessage"/>
             <h:outputText value="#{msgs.newPassword}"/>
-            <h:inputSecret binding="#{password}" required="true"/>
+            <h:inputSecret id="addNewPassword" binding="#{password}" required="true" requiredMessage="#{msgs.requiredField}"/>
+            <h:message for="addNewPassword" styleClass="errorMessage"/>
             <h:outputText value="#{msgs.confirmNewPassword}"/>
-            <h:inputSecret binding="#{confirmPassword}" required="true"/> 
+            <h:inputSecret id="addConfirmPassword" binding="#{confirmPassword}" validator="#{adminController.validateNewPassword}" required="true" requiredMessage="#{msgs.requiredField}"/>
+            <h:message for="addConfirmPassword" styleClass="errorMessage"/> 
          </h:panelGrid>
-         <h:commandButton value="#{msgs.addEmployee}" action="#{adminController.addEmployee(password.value, confirmPassword.value)}" class="button footerButton"/>           
+         <h:commandButton value="#{msgs.addEmployee}" action="#{adminController.addEmployee(password.value, confirmPassword.value)}" class="button footerButton"/>
+         <h:messages globalOnly="true" layout="table"/>           
       </ui:composition>
    </body>
 </html>
