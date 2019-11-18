@@ -52,7 +52,11 @@
                         <h:outputText value="#{msgs.project}" 
                                       style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText value="#{row.projectID}" size="2"/>
+                     <h:inputText id="projectID" value="#{row.projectID}" size="2" converterMessage="must be numeric"
+                     	required="true" requiredMessage="#{msgs.requiredField}">
+                     	<f:convertNumber integerOnly="true" type="number"/>
+                     </h:inputText>
+                     <h:message for="projectID" styleClass="errorMessage"/>
                      <f:facet name="footer">
                         <h:commandButton action="#{tsController.save(empController.getCurrentTimesheet())}" value="Save"/>
                      </f:facet>
@@ -62,7 +66,8 @@
                         <h:outputText value="#{msgs.workPackage}"
                                       style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText value="#{row.wp}" size="4"/>
+                     <h:inputText id="wp" value="#{row.wp}" size="4" required="true" requiredMessage="#{msgs.requiredField}"/>
+                     <h:message for="wp" styleClass="errorMessage"/>
                      <f:facet name="footer">
                         <h:outputText value="#{msgs.total}"/>
                      </f:facet>
@@ -82,7 +87,11 @@
                         <h:outputText value="#{msgs.saturday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText value="#{row.hourSat}" size="2"/>
+                     <h:inputText id="sat" value="#{row.hourSat}" size="2" converterMessage="must be a number" validatorMessage="must be between 0 and 24">
+                     	<f:convertNumber maxFractionDigits = "1" longOnly="true" type="number"/>
+                     	<f:validateLongRange minimum = "0" maximum = "24" />
+                     </h:inputText>
+                     <h:message for="sat" styleClass="errorMessage"/>
                      <f:facet name="footer">
                         <h:outputText value="#{tsController.getDayHour(empController.currentTimesheet, 0)}"/>
                      </f:facet>
@@ -92,7 +101,11 @@
                         <h:outputText value="#{msgs.sunday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText value="#{row.hourSun}" size="2"/>
+                     <h:inputText id="sun" value="#{row.hourSun}" size="2" converterMessage="must be a number" validatorMessage="must be between 0 and 24">
+                     	<f:convertNumber maxFractionDigits = "1" longOnly="true" type="number"/>
+                     	<f:validateLongRange minimum = "0" maximum = "24" />
+                     </h:inputText>
+                     <h:message for="sun" styleClass="errorMessage"/>
                      <f:facet name="footer">
                         <h:outputText value="#{tsController.getDayHour(empController.currentTimesheet, 1)}"/>
                      </f:facet>
@@ -102,7 +115,11 @@
                         <h:outputText value="#{msgs.monday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText value="#{row.hourMon}" size="2"/>
+                     <h:inputText id="mon" value="#{row.hourMon}" size="2" converterMessage="must be a number" validatorMessage="must be between 0 and 24">
+                     	<f:convertNumber maxFractionDigits = "1" longOnly="true" type="number"/>
+                     	<f:validateLongRange minimum = "0" maximum = "24" />
+                     </h:inputText>
+                     <h:message for="mon" styleClass="errorMessage"/>
                      <f:facet name="footer">
                         <h:outputText value="#{tsController.getDayHour(empController.currentTimesheet, 2)}"/>
                      </f:facet>
@@ -112,7 +129,11 @@
                         <h:outputText value="#{msgs.tuesday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText value="#{row.hourTue}" size="2"/>
+                     <h:inputText for="tue" value="#{row.hourTue}" size="2" converterMessage="must be a number" validatorMessage="must be between 0 and 24">
+                     	<f:convertNumber maxFractionDigits = "1" longOnly="true" type="number"/>
+                     	<f:validateLongRange minimum = "0" maximum = "24" />
+                     </h:inputText>
+                     <h:message for="tue" styleClass="errorMessage"/>
                      <f:facet name="footer">
                         <h:outputText value="#{tsController.getDayHour(empController.currentTimesheet, 3)}"/>
                      </f:facet>
@@ -122,7 +143,11 @@
                         <h:outputText value="#{msgs.wednesday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText value="#{row.hourWed}" size="2"/>
+                     <h:inputText for="wed" value="#{row.hourWed}" size="2" converterMessage="must be a number" validatorMessage="must be between 0 and 24">
+                     	<f:convertNumber maxFractionDigits = "1" longOnly="true" type="number"/>
+                     	<f:validateLongRange minimum = "0" maximum = "24" />
+                     </h:inputText>
+                     <h:message for="wed" styleClass="errorMessage"/>
                      <f:facet name="footer">
                         <h:outputText value="#{tsController.getDayHour(empController.currentTimesheet, 4)}"/>
                      </f:facet>
@@ -132,7 +157,11 @@
                         <h:outputText value="#{msgs.thursday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText value="#{row.hourThur}" size="2"/>
+                     <h:inputText for="thur" value="#{row.hourThur}" size="2" converterMessage="must be a number" validatorMessage="must be between 0 and 24">
+                     	<f:convertNumber maxFractionDigits = "1" longOnly="true" type="number"/>
+                     	<f:validateLongRange minimum = "0" maximum = "24" />
+                     </h:inputText>
+                     <h:message for="thur" styleClass="errorMessage"/>
                      <f:facet name="footer">
                         <h:outputText value="#{tsController.getDayHour(empController.currentTimesheet, 5)}"/>
                      </f:facet>
@@ -142,7 +171,11 @@
                         <h:outputText value="#{msgs.friday}" 
                                        style="font-weight: bold"/>
                      </f:facet>
-                     <h:inputText value="#{row.hourFri}" size="2"/>
+                     <h:inputText for="fri" value="#{row.hourFri}" size="2" converterMessage="must be a number" validatorMessage="must be between 0 and 24">
+                     	<f:convertNumber maxFractionDigits = "1" longOnly="true" type="number"/>
+                     	<f:validateLongRange minimum = "0" maximum = "24" />
+                     </h:inputText>
+                     <h:message for="fri" styleClass="errorMessage"/>
                      <f:facet name="footer">
                         <h:outputText value="#{tsController.getDayHour(empController.currentTimesheet, 6)}"/>
                      </f:facet>

@@ -42,9 +42,8 @@ public class EmployeeController implements Serializable {
     @EJB
     private TimesheetManager tsManager;
     
-    @Inject 
-    private Conversation conversation;
     private Employee currentEmployee;
+    
     private boolean admin;
     
     /**
