@@ -19,25 +19,46 @@ public class TimesheetRowManager implements Serializable {
     private static final long serialVersionUID = 1L;
     @PersistenceContext(unitName="timesheet-jpa") EntityManager em;
     
+    /**
+     * returns timesheetrow with this id
+     * @param id
+     * @return
+     */
     public TimesheetRow find(int id) {
         return em.find(TimesheetRow.class, id);
-            }
+    }
 
+    /**
+     * adds the timesheetrow to the timesheetrow table
+     */
     public void persist(TimesheetRow tsr) {
         System.out.println("Adding row to database");
         em.persist(tsr);
     }
     
+    /**
+     * updates the timesheet row to the timesheetrow table
+     * @param tsr
+     */
     public void merge(TimesheetRow tsr) {
         System.out.println("tsrm merging:" + tsr.getWp());
         em.merge(tsr);
     }
 
+    /**
+     * removes the timesheetrow from the timesheetrow table
+     * @param tsr
+     */
     public void remove(TimesheetRow tsr) {
         tsr = find(tsr.getId());
         em.remove(tsr);
     }
     
+    /**
+     * returns the timesheetrow for this timesheet
+     * @param timesheetId
+     * @return
+     */
     public ArrayList<TimesheetRow> getByTimesheet(int timesheetId) {
         TypedQuery<TimesheetRow> query = em.createQuery("select tsr from " +
                 "TimesheetRow tsr where tsr.timesheet.id = " + timesheetId, TimesheetRow.class); 
@@ -49,6 +70,11 @@ public class TimesheetRowManager implements Serializable {
          return tsrList;
     }
 
+    /**
+     * returns the total hours for this timesheet
+     * @param ts
+     * @return
+     */
     public double getTimesheetHours(Timesheet ts) {
         double result = 0;
         TypedQuery<TimesheetRow> query = em.createQuery("select tsr from " +
@@ -60,6 +86,12 @@ public class TimesheetRowManager implements Serializable {
          return result;
     }
 
+    /**
+     * gets the total hours for this day
+     * @param ts
+     * @param day
+     * @return
+     */
     public double getDayHours(Timesheet ts, int day) {
         double result = 0;
         TypedQuery<TimesheetRow> query = em.createQuery("select tsr from " +

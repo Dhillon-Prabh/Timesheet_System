@@ -19,22 +19,45 @@ import com.corejsf.model.Credential;
 public class CredentialController implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * holds the credentials of the current user
+     */
     private Credential currentCred = new Credential();
+    
+    /**
+     * default password to which the admin can reset the password of the user
+     */
     private String defaultPassword = "default";
 
     @EJB
     private CredentialManager credManager;
     
+    /**
+     * default constructor
+     */
     public CredentialController() { }
     
+    /**
+     * setter for the current credentails
+     * @param c
+     */
     public void setCurrentCred(Credential c) {
         currentCred = c;
     }
     
+    /**
+     * getter for the current credentials
+     */
     public Credential getCurrentCred() {
         return currentCred;
     }
     
+    /**
+     * updates the password in the credentials database
+     * @param curPassword
+     * @param newPassword
+     * @param confirmNewPassword
+     */
     public void updatePassword(String curPassword, String newPassword, String confirmNewPassword) {
         if (currentCred.getPassword().equals(curPassword) && newPassword.equals(confirmNewPassword)) {
             currentCred.setPassword(newPassword);
@@ -44,12 +67,22 @@ public class CredentialController implements Serializable {
         }
     }
     
+    /**
+     * resets the password. Performed only by the admin
+     * @param username
+     */
     public void resetPassword(String username) {
         Credential cred = credManager.findByUserName(username);
         cred.setPassword(defaultPassword);
         credManager.merge(cred);
     }
     
+    /**
+     * validates if the entered current password is correct, before updating password.
+     * @param context
+     * @param component
+     * @param value
+     */
     public void validateCurPassword(FacesContext context, UIComponent component, Object value) {
 
         UIInput curPassword = (UIInput) component.findComponent("curPassword");
@@ -64,6 +97,12 @@ public class CredentialController implements Serializable {
         }
     }
     
+    /**
+     * validates the new password against the repeat password field.
+     * @param context
+     * @param component
+     * @param value
+     */
     public void validateNewPassword(FacesContext context, UIComponent component, Object value) {
 
         UIInput newPassword = (UIInput) component.findComponent("newPassword");

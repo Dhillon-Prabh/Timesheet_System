@@ -73,6 +73,12 @@ public class AdminController implements Serializable {
         removeEmp = false;
     }
     
+    /**
+     * Do not allow the update of the admin user. This validates it.
+     * @param context
+     * @param component
+     * @param value
+     */
     public void validateUpdateAdmin(FacesContext context, UIComponent component, Object value) {
 
         UIInput nameInput = (UIInput) component.findComponent("updateName");
@@ -87,6 +93,12 @@ public class AdminController implements Serializable {
         }
     }
     
+    /**
+     * Do not allow the delete of the admin user. This validates it.
+     * @param context
+     * @param component
+     * @param value
+     */
     public void validateDeleteAdmin(FacesContext context, UIComponent component, Object value) {
 
         UIInput nameInput = (UIInput) component.findComponent("deleteName");
@@ -102,6 +114,9 @@ public class AdminController implements Serializable {
         }
     }
     
+    /**
+     * deletes the employee
+     */
     public void deleteEmployee() {
         Credential cred = credManager.findByUserName(userName);
         credManager.remove(cred);
@@ -123,6 +138,12 @@ public class AdminController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, facesMessage);
     }
     
+    /**
+     * checks if the employee number already exists
+     * @param context
+     * @param component
+     * @param value
+     */
     public void validateEmpNum(FacesContext context, UIComponent component, Object value) {
         
         Integer empNumber = ((Integer) value).intValue();
@@ -137,6 +158,12 @@ public class AdminController implements Serializable {
         }
     }
     
+    /**
+     * validates the username. If this already exists do not allow that.
+     * @param context
+     * @param component
+     * @param value
+     */
     public void validateUserName(FacesContext context, UIComponent component, Object value) {
 
         UIInput usernameInput = (UIInput) component.findComponent("addUserName");
@@ -153,6 +180,12 @@ public class AdminController implements Serializable {
         }
     }
 
+    /**
+     * newPassword and repeated password should be the same
+     * @param context
+     * @param component
+     * @param value
+     */
     public void validateNewPassword(FacesContext context, UIComponent component, Object value) {
 
         UIInput newPassword = (UIInput) component.findComponent("addNewPassword");
@@ -169,6 +202,9 @@ public class AdminController implements Serializable {
         }
     }
     
+    /**
+     * adds the employee to the database
+     */
     public void addEmployee(String password, String newPassword) {
         if (!password.equals(newPassword)) {
             return;

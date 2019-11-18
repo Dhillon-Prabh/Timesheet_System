@@ -39,8 +39,14 @@ public class EmployeeController implements Serializable {
     @EJB
     private TimesheetManager tsManager;
     
+    /**
+     * holds the current logged in employee
+     */
     private Employee currentEmployee;
     
+    /**
+     * boolean for if the signed in employee is admin or not
+     */
     private boolean admin;
     
     /**
@@ -48,22 +54,43 @@ public class EmployeeController implements Serializable {
      */
     public EmployeeController() { }
     
+    /**
+     * returns a list of all the employees
+     * @return
+     */
     public List<Employee> getEmployees() {
         return empManager.getAll();
     }
 
+    /**
+     * returns an employee by the name
+     * @param name
+     * @return
+     */
     public Employee getEmployee(String name) {
         return empManager.getByName(name);
     }
 
+    /**
+     * returns all the login combos from the credentials table
+     * @return
+     */
     public Map<String, String> getLoginCombos() {
         return credManager.getCombo();
     }
 
+    /**
+     * returns currentEmployee
+     * @return
+     */
     public Employee getCurrentEmployee() {
         return currentEmployee;
     }
     
+    /**
+     * returns true if the logged in user is an admin
+     * @return
+     */
     public boolean getAdmin() {
         return admin;
     }

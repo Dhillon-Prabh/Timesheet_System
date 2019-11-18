@@ -24,6 +24,7 @@ public class TimesheetManager implements Serializable{
     
     @EJB
     private TimesheetRowManager tsrm;
+    
     /**
     * Find Inventory record from database.
     * 
@@ -66,6 +67,11 @@ public class TimesheetManager implements Serializable{
        em.remove(timesheet);
    }
    
+   /**
+    * returns all the timesheets for this employee
+    * @param e
+    * @return
+    */
    public Timesheet[] getTimesheets(Employee e) {
        TypedQuery<Timesheet> query = em.createQuery("select t from " +
                "Timesheet t where t.emp.id = " + e.getId(), Timesheet.class); 
@@ -77,6 +83,11 @@ public class TimesheetManager implements Serializable{
        return tsArray;
    }
    
+   /**
+    * gets the current timesheet for this employee
+    * @param e
+    * @return
+    */
    public Timesheet getCurrentTimesheet(Employee e) {
        Timesheet t = new Timesheet();
        int we = t.getWeekNumber();
