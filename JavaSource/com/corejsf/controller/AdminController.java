@@ -79,11 +79,9 @@ public class AdminController implements Serializable {
         
         String name = (String) nameInput.getSubmittedValue();
 
-        System.out.println(name);
         if (name.equals("admin")) {
-            FacesMessage message = 
-                    new FacesMessage("Attempting to update admin.", 
-                            "Cannot alter admin account");
+            FacesMessage message = com.corejsf.util.Messages.getMessage(
+                    "com.corejsf.controller.messages", "updateAdmin", null);
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(message);
         }
@@ -97,9 +95,8 @@ public class AdminController implements Serializable {
 
         System.out.println(name);
         if (name.equals("admin")) {
-            FacesMessage message = 
-                    new FacesMessage("Attempting to delete admin.", 
-                            "Cannot delete admin");
+            FacesMessage message = com.corejsf.util.Messages.getMessage(
+                    "com.corejsf.controller.messages", "deleteAdmin", null);
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(message);
         }
@@ -121,7 +118,8 @@ public class AdminController implements Serializable {
         empManager.remove(employee);
         remove();
 
-        FacesMessage facesMessage = new FacesMessage("Successfully deleted employee", "Employee deleted");
+        FacesMessage facesMessage = com.corejsf.util.Messages.getMessage(
+                "com.corejsf.controller.messages", "deleteEmployee", null);
         FacesContext.getCurrentInstance().addMessage(null, facesMessage);
     }
     
@@ -131,9 +129,8 @@ public class AdminController implements Serializable {
 
         for (Employee e : empController.getEmployees()) {
             if (e.getEmpNumber() == empNumber) {
-                FacesMessage message = 
-                        new FacesMessage("Existing employee number.", 
-                                "Employee with employee number " + value + " already exists in the system");
+                FacesMessage message = com.corejsf.util.Messages.getMessage(
+                        "com.corejsf.controller.messages", "addEmpNum", null);
                 message.setSeverity(FacesMessage.SEVERITY_ERROR);
                 throw new ValidatorException(message);
             }
@@ -148,9 +145,8 @@ public class AdminController implements Serializable {
 
         for (Employee e : empController.getEmployees()) {
             if (e.getUserName().equals(username)) {
-                FacesMessage message = 
-                        new FacesMessage("Existing username.", 
-                                "Username already exists in the system");
+                FacesMessage message = com.corejsf.util.Messages.getMessage(
+                        "com.corejsf.controller.messages", "addUsername", null);
                 message.setSeverity(FacesMessage.SEVERITY_ERROR);
                 throw new ValidatorException(message);
             }
@@ -166,9 +162,8 @@ public class AdminController implements Serializable {
         String password2 = (String) confirmNewPassword.getSubmittedValue();
 
         if (!password.equals(password2)) {
-            FacesMessage message = 
-                    new FacesMessage("Password match failed.", 
-                            "New passwords do not match");
+            FacesMessage message = com.corejsf.util.Messages.getMessage(
+                    "com.corejsf.controller.messages", "checkPasswords", null);
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(message);
         }
@@ -232,7 +227,8 @@ public class AdminController implements Serializable {
         Employee emp = empController.getEmployee(name);
         if (emp == null) {
             foundEmp = false;
-            FacesMessage facesMessage = new FacesMessage("Could not find employee with name : " + name, "Employee not found");
+            FacesMessage facesMessage = com.corejsf.util.Messages.getMessage(
+                    "com.corejsf.controller.messages", "findEmp", null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
         } else {
             employee = emp;
@@ -256,7 +252,8 @@ public class AdminController implements Serializable {
         empManager.merge(employee);
         update();
 
-        FacesMessage facesMessage = new FacesMessage("Successfully updated employee", "Employee updated");
+        FacesMessage facesMessage = com.corejsf.util.Messages.getMessage(
+                "com.corejsf.controller.messages", "updateEmployee", null);
         FacesContext.getCurrentInstance().addMessage(null, facesMessage);
     }
     

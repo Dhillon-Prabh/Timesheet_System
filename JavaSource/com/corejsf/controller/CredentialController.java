@@ -3,7 +3,6 @@ package com.corejsf.controller;
 import java.io.Serializable;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -58,9 +57,8 @@ public class CredentialController implements Serializable {
         String password = (String) curPassword.getSubmittedValue();
 
         if (!password.equals(currentCred.getPassword())) {
-            FacesMessage message = 
-                    new FacesMessage("Credential validation failed.", 
-                            "Password does not match current password");
+            FacesMessage message = com.corejsf.util.Messages.getMessage(
+                    "com.corejsf.controller.messages", "checkPassword", null);
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(message);
         }
@@ -75,9 +73,8 @@ public class CredentialController implements Serializable {
         String password2 = (String) confirmNewPassword.getSubmittedValue();
 
         if (!password.equals(password2)) {
-            FacesMessage message = 
-                    new FacesMessage("Password match failed.", 
-                            "New passwords do not match");
+            FacesMessage message = com.corejsf.util.Messages.getMessage(
+                    "com.corejsf.controller.messages", "checkPasswords", null);
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(message);
         }
