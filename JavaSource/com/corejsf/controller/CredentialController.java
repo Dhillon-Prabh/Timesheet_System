@@ -14,62 +14,73 @@ import javax.inject.Named;
 import com.corejsf.access.CredentialManager;
 import com.corejsf.model.Credential;
 
+/**
+ * Controller for Credentials.
+ * @author jham
+ * @author psingh
+ * @version 1.0
+ */
 @Named("credController")
 @SessionScoped
 public class CredentialController implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * holds the credentials of the current user
+     * holds the credentials of the current user.
      */
     private Credential currentCred = new Credential();
     
     /**
-     * default password to which the admin can reset the password of the user
+     * default password to which the admin can reset the password of the user.
      */
     private String defaultPassword = "default";
 
+    /** Connection to Credentials table. */
     @EJB
     private CredentialManager credManager;
     
     /**
-     * default constructor
+     * default constructor.
      */
     public CredentialController() { }
     
     /**
-     * setter for the current credentails
-     * @param c
+     * setter for the current credentails.
+     * @param c Credential
      */
     public void setCurrentCred(Credential c) {
         currentCred = c;
     }
     
     /**
-     * getter for the current credentials
+     * getter for the current credentials.
+     * @return Credential
      */
     public Credential getCurrentCred() {
         return currentCred;
     }
     
     /**
-     * updates the password in the credentials database
-     * @param curPassword
-     * @param newPassword
-     * @param confirmNewPassword
+     * updates the password in the credentials database.
+     * @param curPassword current password
+     * @param newPassword new password
+     * @param confirmNewPassword confirm new password
      */
-    public void updatePassword(String curPassword, String newPassword, String confirmNewPassword) {
-        if (currentCred.getPassword().equals(curPassword) && newPassword.equals(confirmNewPassword)) {
+    public void updatePassword(String curPassword, String newPassword, 
+            String confirmNewPassword) {
+        if (currentCred.getPassword().equals(curPassword) 
+                && newPassword.equals(confirmNewPassword)) {
             currentCred.setPassword(newPassword);
             credManager.merge(currentCred);
-            FacesMessage facesMessage = new FacesMessage("Successfully updated password", "Password updated");
+            FacesMessage facesMessage = com.corejsf.util.Messages.getMessage(
+                    "com.corejsf.controller.messages", "updatePassword", null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
         }
     }
     
     /**
      * resets the password. Performed only by the admin
-     * @param username
+     * @param username username
      */
     public void resetPassword(String username) {
         Credential cred = credManager.findByUserName(username);
@@ -78,12 +89,14 @@ public class CredentialController implements Serializable {
     }
     
     /**
-     * validates if the entered current password is correct, before updating password.
-     * @param context
-     * @param component
-     * @param value
+     * validates if the entered current password is correct, before updating 
+     * password.
+     * @param context Context
+     * @param component Component
+     * @param value Value
      */
-    public void validateCurPassword(FacesContext context, UIComponent component, Object value) {
+    public void validateCurPassword(FacesContext context, 
+            UIComponent component, Object value) {
 
         UIInput curPassword = (UIInput) component.findComponent("curPassword");
         
@@ -99,14 +112,16 @@ public class CredentialController implements Serializable {
     
     /**
      * validates the new password against the repeat password field.
-     * @param context
-     * @param component
-     * @param value
+     * @param context Context
+     * @param component Component
+     * @param value Value
      */
-    public void validateNewPassword(FacesContext context, UIComponent component, Object value) {
+    public void validateNewPassword(FacesContext context, 
+            UIComponent component, Object value) {
 
         UIInput newPassword = (UIInput) component.findComponent("newPassword");
-        UIInput confirmNewPassword = (UIInput) component.findComponent("confirmNewPassword");
+        UIInput confirmNewPassword 
+            = (UIInput) component.findComponent("confirmNewPassword");
         
         String password = (String) newPassword.getLocalValue();
         String password2 = (String) confirmNewPassword.getSubmittedValue();

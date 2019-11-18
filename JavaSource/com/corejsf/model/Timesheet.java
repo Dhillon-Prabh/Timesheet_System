@@ -2,6 +2,7 @@ package com.corejsf.model;
 
 
 import java.util.Date;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,11 +19,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.corejsf.access.TimesheetRowManager;
-
+/**
+ * Model for timesheet table.
+ * @author jham
+ * @author psingh
+ * @version 1.0
+ */
 @Entity
-@Table(name="timesheet")
-public class Timesheet {
+@Table(name = "timesheet")
+public class Timesheet implements Serializable {
     
     /** Number of days in a week. */
     public static final int DAYS_IN_WEEK = 7;
@@ -43,17 +48,20 @@ public class Timesheet {
 
     /** Serial version number. */
     private static final long serialVersionUID = 2L;
-    
+   
+    /** primary key. */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="TimesheetID", updatable = false, nullable = false)
+    @Column(name = "TimesheetID", updatable = false, nullable = false)
     private int id;
     
+    /** employee from employee table. */
     @ManyToOne
-    @JoinColumn(name="EmployeeID")
+    @JoinColumn(name = "EmployeeID")
     private Employee emp;
 
-    @Column(name="EndWeek")
+    /** end week. */
+    @Column(name = "EndWeek")
     private Date endWeek;
     
     /**
@@ -74,7 +82,6 @@ public class Timesheet {
      * 
      * @param user The owner of the timesheet
      * @param end The date of the end of the week for the timesheet (Friday)
-     * @param charges The detailed hours charged for the week for this 
      *        timesheet
      */
     public Timesheet(final Employee user, final Date end) {
@@ -83,22 +90,42 @@ public class Timesheet {
         endWeek = end;
     }
     
+    /**
+     * gets the id.
+     * @return id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * gets the emp.
+     * @return Employee
+     */
     public Employee getEmp() {
         return emp;
     }
 
+    /**
+     * sets the emp.
+     * @param empID employee id
+     */
     public void setEmp(Employee empID) {
         this.emp = empID;
     }
 
+    /**
+     * gets the ending week.
+     * @return Date
+     */
     public Date getEndWeek() {
         return endWeek;
     }
 
+    /**
+     * sets the ending week.
+     * @param endWeek Date
+     */
     public void setEndWeek(Date endWeek) {
         this.endWeek = endWeek;
     }

@@ -22,26 +22,38 @@ import com.corejsf.model.Employee;
 import com.corejsf.model.Timesheet;
 import com.corejsf.model.TimesheetRow;
 
+/**
+ * Controller for administrator. Deals with administrator rights.
+ * @author jham
+ * @author psingh
+ * @version 1.0
+ */
 @Named("adminController")
 @ViewScoped
 public class AdminController implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    /** Connection to Employee table. */
     @EJB
     private EmployeeManager empManager;
     
+    /** Connection to Credential table. */
     @EJB
     private CredentialManager credManager;
     
+    /** Connection to Timesheet table. */
     @EJB
     private TimesheetManager tsManager;
     
+    /** Connection to TimesheetRow table. */
     @EJB
     private TimesheetRowManager tsrManager;
     
+    /** Employee controller. */
     @Inject
     private EmployeeController empController;
     
+    /** Timesheet controller. */
     @Inject
     private TimesheetController tsController;
     
@@ -74,48 +86,7 @@ public class AdminController implements Serializable {
     }
     
     /**
-     * Do not allow the update of the admin user. This validates it.
-     * @param context
-     * @param component
-     * @param value
-     */
-    public void validateUpdateAdmin(FacesContext context, UIComponent component, Object value) {
-
-        UIInput nameInput = (UIInput) component.findComponent("updateName");
-        
-        String name = (String) nameInput.getSubmittedValue();
-
-        if (name.equals("admin")) {
-            FacesMessage message = com.corejsf.util.Messages.getMessage(
-                    "com.corejsf.controller.messages", "updateAdmin", null);
-            message.setSeverity(FacesMessage.SEVERITY_ERROR);
-            throw new ValidatorException(message);
-        }
-    }
-    
-    /**
-     * Do not allow the delete of the admin user. This validates it.
-     * @param context
-     * @param component
-     * @param value
-     */
-    public void validateDeleteAdmin(FacesContext context, UIComponent component, Object value) {
-
-        UIInput nameInput = (UIInput) component.findComponent("deleteName");
-        
-        String name = (String) nameInput.getSubmittedValue();
-
-        System.out.println(name);
-        if (name.equals("admin")) {
-            FacesMessage message = com.corejsf.util.Messages.getMessage(
-                    "com.corejsf.controller.messages", "deleteAdmin", null);
-            message.setSeverity(FacesMessage.SEVERITY_ERROR);
-            throw new ValidatorException(message);
-        }
-    }
-    
-    /**
-     * deletes the employee
+     * deletes the employee.
      */
     public void deleteEmployee() {
         Credential cred = credManager.findByUserName(userName);
@@ -139,71 +110,9 @@ public class AdminController implements Serializable {
     }
     
     /**
-     * checks if the employee number already exists
-     * @param context
-     * @param component
-     * @param value
-     */
-    public void validateEmpNum(FacesContext context, UIComponent component, Object value) {
-        
-        Integer empNumber = ((Integer) value).intValue();
-
-        for (Employee e : empController.getEmployees()) {
-            if (e.getEmpNumber() == empNumber) {
-                FacesMessage message = com.corejsf.util.Messages.getMessage(
-                        "com.corejsf.controller.messages", "addEmpNum", null);
-                message.setSeverity(FacesMessage.SEVERITY_ERROR);
-                throw new ValidatorException(message);
-            }
-        }
-    }
-    
-    /**
-     * validates the username. If this already exists do not allow that.
-     * @param context
-     * @param component
-     * @param value
-     */
-    public void validateUserName(FacesContext context, UIComponent component, Object value) {
-
-        UIInput usernameInput = (UIInput) component.findComponent("addUserName");
-        
-        String username = (String) usernameInput.getSubmittedValue();
-
-        for (Employee e : empController.getEmployees()) {
-            if (e.getUserName().equals(username)) {
-                FacesMessage message = com.corejsf.util.Messages.getMessage(
-                        "com.corejsf.controller.messages", "addUsername", null);
-                message.setSeverity(FacesMessage.SEVERITY_ERROR);
-                throw new ValidatorException(message);
-            }
-        }
-    }
-
-    /**
-     * newPassword and repeated password should be the same
-     * @param context
-     * @param component
-     * @param value
-     */
-    public void validateNewPassword(FacesContext context, UIComponent component, Object value) {
-
-        UIInput newPassword = (UIInput) component.findComponent("addNewPassword");
-        UIInput confirmNewPassword = (UIInput) component.findComponent("addConfirmPassword");
-        
-        String password = (String) newPassword.getLocalValue();
-        String password2 = (String) confirmNewPassword.getSubmittedValue();
-
-        if (!password.equals(password2)) {
-            FacesMessage message = com.corejsf.util.Messages.getMessage(
-                    "com.corejsf.controller.messages", "checkPasswords", null);
-            message.setSeverity(FacesMessage.SEVERITY_ERROR);
-            throw new ValidatorException(message);
-        }
-    }
-    
-    /**
-     * adds the employee to the database
+     * adds the employee to the database.
+     * @param password new password
+     * @param newPassword confirm new password
      */
     public void addEmployee(String password, String newPassword) {
         if (!password.equals(newPassword)) {
@@ -257,10 +166,10 @@ public class AdminController implements Serializable {
 
     /**
      * Sets boolean values to render necessary text when finding users.
-     * @param emp Employee to find
+     * @param newName Employee to find
      */
-    public void findEmp(String name) {
-        Employee emp = empController.getEmployee(name);
+    public void findEmp(String newName) {
+        Employee emp = empController.getEmployee(newName);
         if (emp == null) {
             foundEmp = false;
             FacesMessage facesMessage = com.corejsf.util.Messages.getMessage(
@@ -291,6 +200,118 @@ public class AdminController implements Serializable {
         FacesMessage facesMessage = com.corejsf.util.Messages.getMessage(
                 "com.corejsf.controller.messages", "updateEmployee", null);
         FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+    }
+
+    
+    /**
+     * Do not allow the update of the admin user. This validates it.
+     * @param context Context
+     * @param component Component
+     * @param value Value
+     */
+    public void validateUpdateAdmin(FacesContext context, 
+            UIComponent component, Object value) {
+
+        UIInput nameInput = (UIInput) component.findComponent("updateName");
+        
+        String nameStr = (String) nameInput.getSubmittedValue();
+
+        if (nameStr.equals("admin")) {
+            FacesMessage message = com.corejsf.util.Messages.getMessage(
+                    "com.corejsf.controller.messages", "updateAdmin", null);
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            throw new ValidatorException(message);
+        }
+    }
+    
+    /**
+     * Do not allow the delete of the admin user. This validates it.
+     * @param context Context
+     * @param component Component
+     * @param value Value
+     */
+    public void validateDeleteAdmin(FacesContext context, 
+            UIComponent component, Object value) {
+
+        UIInput nameInput = (UIInput) component.findComponent("deleteName");
+        
+        String nameStr = (String) nameInput.getSubmittedValue();
+
+        if (nameStr.equals("admin")) {
+            FacesMessage message = com.corejsf.util.Messages.getMessage(
+                    "com.corejsf.controller.messages", "deleteAdmin", null);
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            throw new ValidatorException(message);
+        }
+    }
+    
+    /**
+     * checks if the employee number already exists.
+     * @param context Context
+     * @param component Component
+     * @param value Value
+     */
+    public void validateEmpNum(FacesContext context, 
+            UIComponent component, Object value) {
+        
+        Integer empNumberInt = ((Integer) value).intValue();
+
+        for (Employee e : empController.getEmployees()) {
+            if (e.getEmpNumber() == empNumberInt) {
+                FacesMessage message = com.corejsf.util.Messages.getMessage(
+                        "com.corejsf.controller.messages", "addEmpNum", null);
+                message.setSeverity(FacesMessage.SEVERITY_ERROR);
+                throw new ValidatorException(message);
+            }
+        }
+    }
+    
+    /**
+     * validates the username. If this already exists do not allow that.
+     * @param context Context
+     * @param component Component
+     * @param value Value
+     */
+    public void validateUserName(FacesContext context, 
+            UIComponent component, Object value) {
+
+        UIInput getUsername = (UIInput) component.findComponent("addUserName");
+        
+        String username = (String) getUsername.getSubmittedValue();
+
+        for (Employee e : empController.getEmployees()) {
+            if (e.getUserName().equals(username)) {
+                FacesMessage message = com.corejsf.util.Messages.getMessage(
+                        "com.corejsf.controller.messages", "addUsername", null);
+                message.setSeverity(FacesMessage.SEVERITY_ERROR);
+                throw new ValidatorException(message);
+            }
+        }
+    }
+
+    /**
+     * newPassword and repeated password should be the same.
+     * @param context Context
+     * @param component Component
+     * @param value Value
+     */
+    public void validateNewPassword(FacesContext context, 
+            UIComponent component, Object value) {
+
+        UIInput newPassword 
+            = (UIInput) component.findComponent("addNewPassword");
+        UIInput confirmNewPassword 
+            = (UIInput) component.findComponent("addConfirmPassword");
+        
+        String password = (String) newPassword.getLocalValue();
+        String password2 = (String) confirmNewPassword.getSubmittedValue();
+
+        if (!password.equals(password2)) {
+            FacesMessage message = com.corejsf.util.Messages.getMessage(
+                    "com.corejsf.controller.messages", "checkPasswords", null);
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            throw new ValidatorException(message);
+        }
     }
     
     /**

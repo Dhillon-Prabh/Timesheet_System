@@ -95,6 +95,10 @@ public class EmployeeController implements Serializable {
         return admin;
     }
     
+    /**
+     * returns all the timesheets for current user
+     * @return
+     */
     public List<Timesheet> getAllTimesheets() {
         Timesheet[] tsArray = tsManager.getTimesheets(currentEmployee);
         List<Timesheet> tsList = new ArrayList<Timesheet>();
@@ -104,6 +108,12 @@ public class EmployeeController implements Serializable {
         return tsList;
     }
     
+    /**
+     * gets all the timesheets for a specific employee. This might be used later when the admin can see other users timesheets. 
+     * Not being used right now
+     * @param emp
+     * @return
+     */
     public List<Timesheet> getAllTimesheets(Employee emp) {
         Timesheet[] tsArray = tsManager.getTimesheets(emp);
         List<Timesheet> tsList = new ArrayList<Timesheet>();
@@ -113,10 +123,20 @@ public class EmployeeController implements Serializable {
         return tsList;
     }
     
+    /**
+     * returns the currentTimesheet of the currentEmployee
+     * @return
+     */
     public Timesheet getCurrentTimesheet() {
         return tsManager.getCurrentTimesheet(currentEmployee);
     }
     
+    /**
+     * validates the login
+     * @param context
+     * @param component
+     * @param value
+     */
     public void validateLogin(FacesContext context, UIComponent component, Object value) {
 
         UIInput loginID = (UIInput) component.findComponent("loginID");
@@ -136,6 +156,11 @@ public class EmployeeController implements Serializable {
         }
     }
     
+    /**
+     * verifies the user's entered credentials.
+     * @param cred
+     * @return
+     */
     public boolean verifyUser(Credential cred) {
 
         Credential credential = credManager.findByUserName(cred.getUserName());
@@ -153,6 +178,10 @@ public class EmployeeController implements Serializable {
         return false;
     }
     
+    /**
+     * logs the user out
+     * @return
+     */
     public String logout() {
         currentEmployee = null;
         credController.setCurrentCred(new Credential());
