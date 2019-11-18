@@ -89,38 +89,74 @@ public class Timesheet {
         endWeek = end;
     }
     
+    /**
+     * gets the id
+     * @return
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * gets the emp
+     * @return
+     */
     public Employee getEmp() {
         return emp;
     }
 
+    /**
+     * sets the emp
+     * @param empID
+     */
     public void setEmp(Employee empID) {
         this.emp = empID;
     }
 
+    /**
+     * gets the ending week
+     * @return
+     */
     public Date getEndWeek() {
         return endWeek;
     }
 
+    /**
+     * sets the ending week
+     * @param endWeek
+     */
     public void setEndWeek(Date endWeek) {
         this.endWeek = endWeek;
     }
 
+    /**
+     * gets the overtime
+     * @return
+     */
     public BigDecimal getOvertime() {
         return overtime;
     }
 
+    /**
+     * sets the overtime
+     * @param overtime
+     */
     public void setOvertime(BigDecimal overtime) {
         this.overtime = overtime;
     }
 
+    /**
+     * gets the flextime
+     * @return
+     */
     public BigDecimal getFlextime() {
         return flextime;
     }
 
+    /**
+     * sets the flextime
+     * @param flextime
+     */
     public void setFlextime(BigDecimal flextime) {
         this.flextime = flextime;
     }

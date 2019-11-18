@@ -58,108 +58,216 @@ public class TimesheetRow implements Serializable{
     @Column(name="Note")
     private String note;
     
+    /**
+     * default constructor for the timesheetrow
+     */
     public TimesheetRow() {}
     
+    /**
+     * constructs the timesheetrow with the timesheet attached
+     * @param ts
+     */
     public TimesheetRow(Timesheet ts) {
         this.timesheet = ts;
     }
     
+    /**
+     * gets the id
+     * @return
+     */
     public int getId() {
         return id;
     }
     
+    /**
+     * gets the timesheet
+     * @return
+     */
     public Timesheet getTimesheet() {
         return timesheet;
     }
 
+    /**
+     * sets the timesheet
+     */
     public void setTimesheet(Timesheet timesheet) {
         this.timesheet = timesheet;
     }
 
+    /**
+     * gets the projectid
+     * @return
+     */
     public int getProjectID() {
         return projectID;
     }
 
+    /**
+     * setst the projectid
+     * @param projectID
+     */
     public void setProjectID(int projectID) {
         this.projectID = projectID;
     }
 
+    /**
+     * gets the work package
+     * @return
+     */
     public String getWp() {
         return wp;
     }
 
+    /**
+     * sets the work package
+     * @param wp
+     */
     public void setWp(String wp) {
         this.wp = wp;
     }
 
+    /**
+     * get hourMon
+     * @return
+     */
     public double getHourMon() {
         return hourMon;
     }
 
+    /**
+     * set hourMon
+     * @param hourMon
+     */
     public void setHourMon(double hourMon) {
         this.hourMon = hourMon;
     }
 
+    /**
+     * get hourTue
+     * @return
+     */
     public double getHourTue() {
         return hourTue;
     }
 
+    /**
+     * set hourTue
+     * @param hourTue
+     */
     public void setHourTue(double hourTue) {
         this.hourTue = hourTue;
     }
 
+    /**
+     * get hourWed
+     * @return
+     */
     public double getHourWed() {
         return hourWed;
     }
 
+    /**
+     * set hourWed
+     * @param hourWed
+     */
     public void setHourWed(double hourWed) {
         this.hourWed = hourWed;
     }
 
+    /**
+     * get hourThur
+     * @return
+     */
     public double getHourThur() {
         return hourThur;
     }
 
+    /**
+     * set hourThur
+     * @param hourThur
+     */
     public void setHourThur(double hourThur) {
         this.hourThur = hourThur;
     }
 
+    /**
+     * get hourFri
+     * @return
+     */
     public double getHourFri() {
         return hourFri;
     }
 
+    
+    /**
+     * set hourFri
+     * @param hourFri
+     */
     public void setHourFri(double hourFri) {
         this.hourFri = hourFri;
     }
 
+    /**
+     * get hourSat
+     * @return
+     */
     public double getHourSat() {
         return hourSat;
     }
 
+    /**
+     * sets hourSat
+     * @param hourSat
+     */
     public void setHourSat(double hourSat) {
         this.hourSat = hourSat;
     }
 
+    /**
+     * get hourSun
+     * @return
+     */
     public double getHourSun() {
         return hourSun;
     }
 
+    /**
+     * set hourSun
+     * @param hourSun
+     */
     public void setHourSun(double hourSun) {
         this.hourSun = hourSun;
     }
     
+    /**
+     * gets the total hours
+     * @return
+     */
     public double getTotalHours() {
         return hourMon + hourTue + hourWed + hourThur + hourFri + hourSat + hourSun;
     }
     
+    /**
+     * gets the note
+     * @return
+     */
     public String getNote() {
         return note;
     }
 
+    /**
+     * sets the note
+     * @param note
+     */
     public void setNote(String note) {
         this.note = note;
     }
 
+    /**
+     * gets the total hours of the day
+     * @param day
+     * @return
+     */
     public double getDayhours(int day) {
         double result;
         switch (day) {

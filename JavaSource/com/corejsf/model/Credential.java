@@ -25,18 +25,18 @@ public class Credential implements Serializable{
     @Column(name="userName")
     private String userName;
     
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
     @Column(name="PW")
     private String password;
     
+    /**
+     * default constructor
+     */
     public Credential() {};
     
+    /**
+     * gets the id
+     * @return
+     */
     public int getId() {
         return id;
     }
@@ -48,6 +48,7 @@ public class Credential implements Serializable{
     public Employee getEmp() {
         return emp;
     }
+    
     /**
      * userName setter.
      * @param id the loginID to set
@@ -55,6 +56,7 @@ public class Credential implements Serializable{
     public void setEmp(final Employee emp) {
         this.emp = emp;
     }
+    
     /**
      * password getter.
      * @return the password
@@ -62,11 +64,28 @@ public class Credential implements Serializable{
     public String getPassword() {
         return password;
     }
+    
     /**
      * password setter.
      * @param pw the password to set
      */
     public void setPassword(final String pw) {
         password = pw;
+    }
+    
+    /**
+     * gets the user name
+     * @return
+     */
+    public String getUserName() {
+        return userName;
+    }
+
+    /**
+     * sets the user name
+     * @param userName
+     */
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

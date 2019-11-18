@@ -34,8 +34,15 @@ public class TimesheetController implements Serializable {
     @EJB
     private TimesheetManager tsm;
 
+    /**
+     * holds the rows of the current timesheet
+     */
     private List<TimesheetRow> details;
     
+    /**
+     * saves the current timesheet
+     * @param ts
+     */
     public void save(Timesheet ts) {
         System.out.println(ts);
         System.out.println("These are the details2 " + details.get(0));
@@ -45,6 +52,10 @@ public class TimesheetController implements Serializable {
         }
     }
     
+    /**
+     * adds the row to the timesheet
+     * @param ts
+     */
     public void addRow(Timesheet ts) {
         System.out.println("in here");
         TimesheetRow tr = new TimesheetRow(ts);
@@ -52,12 +63,23 @@ public class TimesheetController implements Serializable {
         refreshList(ts);
     }
     
+    /**
+     * gets the total hours of the current timesheet
+     * @param ts
+     * @return
+     */
     public double getTimesheetHours(Timesheet ts) {
         double result = 0;
         result = tsrm.getTimesheetHours(ts);
         return result;
     }
     
+    /**
+     * gets the total hours for a day in the timesheet
+     * @param ts
+     * @param day
+     * @return
+     */
     public double getDayHour(Timesheet ts, int day) {
         double result = 0;
         result = tsrm.getDayHours(ts, day);
@@ -65,6 +87,11 @@ public class TimesheetController implements Serializable {
     }
    
     
+    /**
+     * gets the rows if the timesheet changes
+     * @param ts
+     * @return
+     */
     public List<TimesheetRow> getDetails(Timesheet ts) {
         if (details == null) {
             refreshList(ts);
@@ -74,12 +101,19 @@ public class TimesheetController implements Serializable {
         }
         return details;
     }
-
+    /**
+     * sets the details 
+     * @param details
+     */
     public void setDetails(List<TimesheetRow> details) {
         System.out.println("SetDetails()");
         this.details = details;
     }
     
+    /**
+     * refreshes the details when the new user logs in or the timesheet changes
+     * @param ts
+     */
     private void refreshList(Timesheet ts) {
         details = new ArrayList<TimesheetRow>();
         List<TimesheetRow> listts = tsrm.getByTimesheet(ts.getId());
